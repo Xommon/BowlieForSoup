@@ -4,31 +4,40 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Overworld Stats
     public float walkingSpeed;
+
+    // Battle Stats
+
+    // References
+    public GameManager gameManager;
+    public Rigidbody2D rb;
+    public DialogueTrigger npc;
+    public DialogueManager dialogueManager;
+
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+        dialogueManager = FindObjectOfType<DialogueManager>();
+    }
 
     private void Update()
     {
-        Vector2 dir = Vector2.zero;
-        if (Input.GetKey(KeyCode.A))
+
+        // Stop moving if the overworld is frozen
+        if (!gameManager.freezeOverworld)
         {
-            dir.x = -1;
+            rb.velocity = new Vector2(Input.GetAxis("Horizontal") * walkingSpeed * Time.deltaTime * 50, Input.GetAxis("Vertical") * walkingSpeed * Time.deltaTime * 50);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else
         {
-            dir.x = 1;
+            rb.velocity = Vector2.zero;
         }
 
-        if (Input.GetKey(KeyCode.W))
+        // Start dialogue with NPC
+        if (Vector3.Distance(transform.position, npc.transform.position) < 1.33f && Input.GetKeyDown(KeyCode.Space) && !dialogueManager.dialogueOpen)
         {
-            dir.y = 1;
+            npc.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            dir.y = -1;
-        }
-
-        dir.Normalize();
-
-        GetComponent<Rigidbody2D>().velocity = walkingSpeed * dir;
     }
 }
