@@ -6437,7 +6437,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -6458,7 +6458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04b2efdf4dd0f04cbdbddafdae8a331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkingSpeed: 2.25
+  walkingSpeed: 2.75
+  fill: 0
   gameManager: {fileID: 0}
   rb: {fileID: 275319362}
   npc: {fileID: 798773439}
@@ -6500,8 +6501,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 5bd63a448440985479b74c2993bd6292, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7592,6 +7593,8 @@ GameObject:
   m_Component:
   - component: {fileID: 361754063}
   - component: {fileID: 361754064}
+  - component: {fileID: 361754065}
+  - component: {fileID: 361754066}
   m_Layer: 23
   m_Name: Bowl
   m_TagString: Untagged
@@ -7650,8 +7653,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 93e9e2078618aec4a94cf002acb1d528, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7664,6 +7667,35 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &361754065
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361754062}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.60136366}
+  serializedVersion: 2
+  m_Radius: 1.1099353
+--- !u!114 &361754066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361754062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad93f45e33ddd74a9f43ed40f28c0b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1001 &362791409
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12764,8 +12796,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 1fa376831caff6c4797089f8f0fecf28, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14003,12 +14035,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue:
-    nameOfSpeaker: JP
+    nameOfSpeaker: Dumaresq
     sentences:
     - Your first recipe is to gather the ingredients to make a tomato soup. It should
-      be pretty easy.
-    - You'll need 4 tomato cubes, 1 onion cube, and 1 garlic cube.
-    - You can find all of these ingredients in the grassland area.
+      be pretty easy. You'll need 4 tomato cubes, 1 onion cube, and 1 garlic cube.
+      You can find all of these ingredients in the grassland area.
 --- !u!1 &801565036
 GameObject:
   m_ObjectHideFlags: 0
@@ -22341,8 +22372,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2262b7103dc118d4aaae296b4dae9f6b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -27935,8 +27966,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1869315837
-  m_SortingLayer: 1
+  m_SortingLayerID: -44025399
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 93e9e2078618aec4a94cf002acb1d528, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.36862746}

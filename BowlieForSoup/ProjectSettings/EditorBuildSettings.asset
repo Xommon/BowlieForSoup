@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Resources/Scenes/LoadingScreen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Resources/Scenes/LiquidScene.unity
+    path: Assets/Resources/Scenes/Overworld.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Resources/Scenes/Battle.unity

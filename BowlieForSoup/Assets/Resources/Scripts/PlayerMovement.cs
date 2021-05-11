@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Overworld Stats
     public float walkingSpeed;
+    public int fill;
 
     // Battle Stats
 
@@ -35,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Start dialogue with NPC
-        if (Vector3.Distance(transform.position, npc.transform.position) < 1.33f && Input.GetKeyDown(KeyCode.Space) && !dialogueManager.dialogueOpen)
+        if (Vector3.Distance(transform.position, npc.transform.position) < 1.33f && Input.GetButtonDown("Fire1") && !dialogueManager.dialogueOpen)
         {
+            Debug.Log("Starting convo with dumaresq");
             npc.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
     }
