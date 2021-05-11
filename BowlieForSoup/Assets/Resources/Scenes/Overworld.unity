@@ -14037,9 +14037,11 @@ MonoBehaviour:
   dialogue:
     nameOfSpeaker: Dumaresq
     sentences:
-    - Your first recipe is to gather the ingredients to make a tomato soup. It should
-      be pretty easy. You'll need 4 tomato cubes, 1 onion cube, and 1 garlic cube.
-      You can find all of these ingredients in the grassland area.
+    - Your first recipe is a tomato soup. It should be pretty easy to make. You'll
+      need 4 tomato cubes, 1 onion cube, and 1 garlic cube. You can find all of these
+      ingredients in the grassland area.
+    - Looks like you've been making some soup. Smells good! Do you want to submit
+      what you have? |
 --- !u!1 &801565036
 GameObject:
   m_ObjectHideFlags: 0

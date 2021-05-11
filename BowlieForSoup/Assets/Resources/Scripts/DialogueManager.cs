@@ -8,10 +8,9 @@ public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
-    public TextMeshProUGUI measureSentenceText;
     public GameObject textBox;
     private string[] sentences;
-    private int sentenceIndex;
+    public int sentenceIndex;
     public bool dialogueOpen;
     public GameManager gameManager;
     public Animator animator;
@@ -19,6 +18,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject textCircle;
     public int stoppedAtCharIndex;
     public int remainingSentences;
+    public GameObject yesBox;
+    public GameObject noBox;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") && !yesBox.activeInHierarchy && (textArrow.activeInHierarchy || textCircle.activeInHierarchy))
         {
             DisplayNextSentence();
         }
@@ -43,40 +44,28 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        textArrow.SetActive(false);
+        textCircle.SetActive(false);
         stoppedAtCharIndex = 0;
-        sentenceIndex = 0;
         animator.SetBool("isOpen", true);
         nameText.text = dialogue.nameOfSpeaker;
         dialogueOpen = true;
         sentences = dialogue.sentences;
-        //sentences.Clear();
-
-        foreach (string sentence in dialogue.sentences)
-        {
-            //sentences.Enqueue(sentence);
-        }
 
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence()
     {
-        /*if (sentences.Count == 0)
+        if (textCircle.activeInHierarchy)
         {
             EndDialogue();
         }
-        else*/
+        else
         {
             //string sentence = sentences.Dequeue();
             StopAllCoroutines();
-            if (sentenceIndex < sentences.Length)
-            {
-                StartCoroutine(PrintSentence(sentences[sentenceIndex]));
-            }
-            else
-            {
-                EndDialogue();
-            }
+            StartCoroutine(PrintSentence(sentences[sentenceIndex]));
         }
     }
 
@@ -92,17 +81,27 @@ public class DialogueManager : MonoBehaviour
             if (i == sentence.Length - 1)
             {
                 textCircle.SetActive(true);
-                sentenceIndex++;
                 break;
             }
 
             if (stoppedAtCharIndex + i < sentence.Length)
             {
-                dialogueText.text += sentence.ToCharArray()[stoppedAtCharIndex + i];
-                yield return null;
+                if (sentence.ToCharArray()[stoppedAtCharIndex + i] == '|')
+                {
+                    textCircle.SetActive(true);
+                    stoppedAtCharIndex += i + 2;
+                    yesBox.SetActive(true);
+                    noBox.SetActive(true);
+                    break;
+                }
+                else
+                {
+                    dialogueText.text += sentence.ToCharArray()[stoppedAtCharIndex + i];
+                    yield return null;
+                }
             }
 
-            if (dialogueText.preferredWidth >= 560)
+            if (dialogueText.preferredWidth >= 555)
             {
                 textArrow.SetActive(true);
                 stoppedAtCharIndex += i + 1;
