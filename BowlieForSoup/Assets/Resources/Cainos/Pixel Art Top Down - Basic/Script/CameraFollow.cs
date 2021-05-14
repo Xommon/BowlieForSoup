@@ -9,6 +9,7 @@ namespace Cainos.PixelArtTopDown_Basic
     {
         public Transform target;
         public float lerpSpeed = 1.0f;
+        public GameManager gameManager;
 
         private Vector3 offset;
 
@@ -17,8 +18,10 @@ namespace Cainos.PixelArtTopDown_Basic
         private void Start()
         {
             if (target == null) return;
+            gameManager = FindObjectOfType<GameManager>();
 
             offset = transform.position - target.position;
+            transform.position = new Vector3(gameManager.savedPlayerPosition.x, gameManager.savedPlayerPosition.y, -10);
         }
 
         private void Update()

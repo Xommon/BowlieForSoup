@@ -20,6 +20,11 @@ public class DialogueManager : MonoBehaviour
     public int remainingSentences;
     public GameObject yesBox;
     public GameObject noBox;
+    public GameObject answerArrow;
+    public bool canChat;
+    public RecipeManager recipeManager;
+    private bool answer;
+    public LiquidGenerator liquidGenerator;
 
     private void Awake()
     {
@@ -28,22 +33,91 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        //sentences = new Queue<string>();
+        recipeManager = FindObjectOfType<RecipeManager>();
         gameManager = FindObjectOfType<GameManager>();
+        liquidGenerator = FindObjectOfType<LiquidGenerator>();
+        canChat = true;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire2") && !yesBox.activeInHierarchy && (textArrow.activeInHierarchy || textCircle.activeInHierarchy))
+        if (Input.GetButtonDown("Fire1") && !yesBox.activeInHierarchy && (textArrow.activeInHierarchy || textCircle.activeInHierarchy) && !answerArrow.activeInHierarchy)
         {
             DisplayNextSentence();
         }
 
-        gameManager.freezeOverworld = dialogueOpen;
+        if (answerArrow.activeInHierarchy)
+        {
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                answerArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(-60, 150);
+                answer = true;
+            }
+            else if (Input.GetAxis("Vertical") < 0)
+            {
+                answerArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(-60, 95);
+                answer = false;
+            }
+        }
+
+        if (Input.GetButtonDown("Fire1") && answerArrow.activeInHierarchy)
+        {
+            textCircle.SetActive(false);
+            answerArrow.SetActive(false);
+            noBox.SetActive(false);
+            yesBox.SetActive(false);
+            stoppedAtCharIndex = 0;
+
+            if (answer)
+            {
+                // YES
+                if (recipeManager.currentRecipe == "Creamy Tomato Soup")
+                {
+                    if (recipeManager.RateSoup() > 3)
+                    {
+                        sentenceIndex = 3;
+                    }
+                    else if (recipeManager.RateSoup() == 3)
+                    {
+                        sentenceIndex = 4;
+                    }
+                    else
+                    {
+                        sentenceIndex = 5;
+                    }
+                }
+                else if (recipeManager.currentRecipe == "Creamy Carrot Soup")
+                {
+                    if (recipeManager.RateSoup() > 3)
+                    {
+                        sentenceIndex = 8;
+                    }
+                    else if (recipeManager.RateSoup() == 3)
+                    {
+                        sentenceIndex = 9;
+                    }
+                    else
+                    {
+                        sentenceIndex = 10;
+                    }
+                }
+
+                recipeManager.ClearRecipe();
+            }
+            else
+            {
+                // NO
+                sentenceIndex = 2;
+            }
+
+            DisplayNextSentence();
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        answer = false; 
+        answerArrow.GetComponent<RectTransform>().anchoredPosition = new Vector2(-60, 95);
         textArrow.SetActive(false);
         textCircle.SetActive(false);
         stoppedAtCharIndex = 0;
@@ -51,6 +125,7 @@ public class DialogueManager : MonoBehaviour
         nameText.text = dialogue.nameOfSpeaker;
         dialogueOpen = true;
         sentences = dialogue.sentences;
+        gameManager.freezeOverworld = true;
 
         DisplayNextSentence();
     }
@@ -61,9 +136,8 @@ public class DialogueManager : MonoBehaviour
         {
             EndDialogue();
         }
-        else
+        else if (!answerArrow.activeInHierarchy)
         {
-            //string sentence = sentences.Dequeue();
             StopAllCoroutines();
             StartCoroutine(PrintSentence(sentences[sentenceIndex]));
         }
@@ -75,7 +149,6 @@ public class DialogueManager : MonoBehaviour
         textCircle.SetActive(false);
         dialogueText.text = "";
 
-        //StartCoroutine(TypeSentence(sentence));
         for (int i = 0; i < sentence.Length; i++)
         {
             if (i == sentence.Length - 1)
@@ -92,12 +165,13 @@ public class DialogueManager : MonoBehaviour
                     stoppedAtCharIndex += i + 2;
                     yesBox.SetActive(true);
                     noBox.SetActive(true);
+                    answerArrow.SetActive(true);
                     break;
                 }
                 else
                 {
                     dialogueText.text += sentence.ToCharArray()[stoppedAtCharIndex + i];
-                    yield return null;
+                    yield return new WaitForSeconds(-1);
                 }
             }
 
@@ -110,61 +184,59 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    /*IEnumerator TypeSentence(string sentence)
-    {
-        for (int i = 0; i < sentence.Length; i++)
-        {
-            if (dialogueText.preferredWidth < 560)
-            {
-                if (i == sentence.Length)
-                {
-                    if (sentences.Count == 0)
-                    {
-                        textCircle.SetActive(true);
-                    }
-                    else
-                    {
-                        textArrow.SetActive(true);
-                    }
-
-                    PrintSentence(sentence);
-                }
-                else
-                {
-                    dialogueText.text += sentence.Substring(stoppedAtCharIndex + i);
-                    yield return new WaitForSeconds(0.1f);
-                }
-            }
-            else
-            {
-                stoppedAtCharIndex += i;
-                textArrow.SetActive(true);
-                break;
-            }
-        }
-        // Determine whether the word will fit or not
-        if (dialogueText.preferredWidth < 560)
-        {
-            // Word will fit
-            foreach (char letter in measureSentenceText.text.ToCharArray())
-            {
-                dialogueText.text += letter;
-                stoppedAtCharIndex++;
-                yield return null;
-            }
-            PrintSentence(sentence.Substring(stoppedAtCharIndex, sentence.Length));
-        }
-        else
-        {
-            // Word will NOT fit
-            Debug.Log("Word will not fit");
-            textArrow.SetActive(true);
-        }
-    }*/
-
     private void EndDialogue()
     {
+        yesBox.SetActive(false);
+        noBox.SetActive(false);
+        answerArrow.SetActive(false);
+        dialogueText.text = "";
         animator.SetBool("isOpen", false);
+        textCircle.SetActive(false);
         dialogueOpen = false;
+        canChat = false;
+        StartCoroutine(ChatCooldown());
+        gameManager.freezeOverworld = false;
+
+        if (sentenceIndex == 0)
+        {
+            // Introduce the creamy tomato soup
+            recipeManager.UploadNewRecipe("Creamy Tomato Soup", new string[] { "Tomato Cube", "Onion Cube", "Garlic Cube" }, new int[] { 4, 1, 1 });
+            sentenceIndex++;
+        }
+        else if (sentenceIndex == 2)
+        {
+            if (recipeManager.currentRecipe == "Creamy Tomato Soup")
+            {
+                sentenceIndex = 1;
+            }
+            else if (recipeManager.currentRecipe == "Creamy Carrot Soup")
+            {
+                sentenceIndex = 7;
+            }
+        }
+        else if (sentenceIndex == 5)
+        {
+            sentenceIndex = 0;
+        }
+        else if (sentenceIndex == 4 || sentenceIndex == 3)
+        {
+            sentenceIndex = 6;
+        }
+        else if (sentenceIndex == 6)
+        {
+            // Introduce the creamy carrot soup
+            recipeManager.UploadNewRecipe("Creamy Carrot Soup", new string[] { "Carrot Cube", "Onion Cube", "Garlic Cube" }, new int[] { 4, 1, 1 });
+            sentenceIndex++;
+        }
+        else if (sentenceIndex == 7)
+        {
+
+        }
+    }
+
+    IEnumerator ChatCooldown()
+    {
+        yield return new WaitForSeconds(1.0f);
+        canChat = true;
     }
 }

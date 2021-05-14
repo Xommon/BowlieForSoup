@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LiquidParticle : MonoBehaviour
 {
@@ -15,8 +16,11 @@ public class LiquidParticle : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         dialogueManager = FindObjectOfType<DialogueManager>();
-        liquidGenerator = FindObjectOfType<LiquidGenerator>();
-        life = 60;
+        if (SceneManager.GetActiveScene().name != "Battle")
+        {
+            liquidGenerator = FindObjectOfType<LiquidGenerator>();
+        }
+        life = 30;
     }
 
     void Update()
@@ -41,7 +45,10 @@ public class LiquidParticle : MonoBehaviour
 
         if (life <= 0)
         {
-            liquidGenerator.liquidCount--;
+            if (SceneManager.GetActiveScene().name != "Battle")
+            {
+                liquidGenerator.liquidCount--;
+            }
             Destroy(gameObject);
         }
     }

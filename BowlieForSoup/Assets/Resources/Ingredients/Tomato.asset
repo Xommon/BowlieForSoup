@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43b18f20d420c64899c138c49893a0d, type: 3}
+  m_Name: Tomato
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 1566518875110761268, guid: f9d3454cc4588764784bd0dc027c8d14, type: 3}
+  children:
+  - {fileID: 11400000, guid: 321b7701660f7d640afa405cfbe8f554, type: 2}
+  - {fileID: 11400000, guid: b985620ed3ffbb54caabe32dacbebd22, type: 2}
+  - {fileID: 11400000, guid: 71651918aa766854b956790784c487da, type: 2}
+  health: 2
+  attack: 1
+  defence: 1
+  speed: 1
+  luck: 1

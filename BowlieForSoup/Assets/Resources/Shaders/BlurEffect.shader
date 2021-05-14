@@ -1,4 +1,4 @@
-// Unity based gaussian blue shader
+// Unity based gaussian blur shader
 
 Shader "VueCode/BlurEffect" {
 	Properties { _MainTex ("", any) = "" {} }

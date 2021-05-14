@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LiquidInBowl : MonoBehaviour
 {
@@ -15,7 +16,10 @@ public class LiquidInBowl : MonoBehaviour
     {
         if (collision.tag == "Water")
         {
-            player.fill++;
+            if (SceneManager.GetActiveScene().name != "Battle")
+            {
+                player.fill++;
+            }
             collision.GetComponent<LiquidParticle>().inBowl = true;
         }
     }
@@ -24,7 +28,10 @@ public class LiquidInBowl : MonoBehaviour
     {
         if (collision.tag == "Water")
         {
-            player.fill--;
+            if (SceneManager.GetActiveScene().name != "Battle")
+            {
+                player.fill--;
+            }
             collision.GetComponent<LiquidParticle>().inBowl = false;
         }
     }

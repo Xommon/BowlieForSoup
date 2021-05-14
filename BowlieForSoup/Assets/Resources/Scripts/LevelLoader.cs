@@ -30,20 +30,37 @@ public class LevelLoader : MonoBehaviour
         {
             // Skip the loading screen
             SceneManager.LoadScene(1);
+            gameManager.freezeOverworld = true;
         }
         else
         {
+            StartCoroutine(UnfreezeOverworld());
             transition.gameObject.SetActive(true);
             transition.Play("blocktransition_end");
         }
     }
 
-    IEnumerator LoadLevel()
+    public void LoadLevel(int sceneIndex)
+    {
+        StartCoroutine(LoadLevelIEN(sceneIndex));
+    }
+
+    IEnumerator LoadLevelIEN(int sceneIndex)
     {
         transition.SetTrigger("Start");
+        gameManager.freezeOverworld = true;
 
         yield return new WaitForSeconds(transitionTime);
+        StartCoroutine(UnfreezeOverworld());
+        transition.gameObject.SetActive(true);
+        transition.Play("blocktransition_end");
 
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadSceneAsync(sceneIndex);
+    }
+
+    IEnumerator UnfreezeOverworld()
+    {
+        yield return new WaitForSeconds(transitionTime);
+        gameManager.freezeOverworld = false;
     }
 }

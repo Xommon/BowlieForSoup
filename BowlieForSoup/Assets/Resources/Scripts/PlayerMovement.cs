@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,23 +9,28 @@ public class PlayerMovement : MonoBehaviour
     public float walkingSpeed;
     public int fill;
 
-    // Battle Stats
-
     // References
     public GameManager gameManager;
+    public BattleManager battleManager;
     public Rigidbody2D rb;
     public DialogueTrigger npc;
     public DialogueManager dialogueManager;
+    public TextMeshProUGUI fillDisplay;
+    public LevelLoader levelLoader;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        battleManager = FindObjectOfType<BattleManager>();
         dialogueManager = FindObjectOfType<DialogueManager>();
+        levelLoader = FindObjectOfType<LevelLoader>();
+        fillDisplay = GameObject.Find("FillDisplayText").GetComponent<TextMeshProUGUI>();
+        transform.position = gameManager.savedPlayerPosition;
+        gameManager.player = this;
     }
 
     private void Update()
     {
-
         // Stop moving if the overworld is frozen
         if (!gameManager.freezeOverworld)
         {
@@ -36,9 +42,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Start dialogue with NPC
-        if (Vector3.Distance(transform.position, npc.transform.position) < 1.33f && Input.GetButtonDown("Fire1") && !dialogueManager.dialogueOpen)
+        if (Vector3.Distance(transform.position, npc.transform.position) < 1.33f && Input.GetButtonDown("Fire1") && !dialogueManager.dialogueOpen && dialogueManager.canChat)
         {
             npc.GetComponent<DialogueTrigger>().TriggerDialogue();
+        }
+
+        // Update fill display
+        fillDisplay.text = fill + "%";
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            // Download the enemy's stats
+            EnemyMovement collisionEnemy = collision.gameObject.GetComponent<EnemyMovement>();
+            battleManager.battleInstanceFromOverworld = collision.gameObject;
+            battleManager.enemyIngredient = collisionEnemy.ingredient;
+            battleManager.enemyLevel = collisionEnemy.level;
+            levelLoader.LoadLevel(2);
         }
     }
 }
