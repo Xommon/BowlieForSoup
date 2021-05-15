@@ -2960,6 +2960,7 @@ MonoBehaviour:
   savedPlayerPosition: {x: 0, y: 0, z: 0}
   playerFill: 0
   player: {fileID: 0}
+  fillDisplay: {fileID: 867493684}
 --- !u!4 &1759964593
 Transform:
   m_ObjectHideFlags: 0

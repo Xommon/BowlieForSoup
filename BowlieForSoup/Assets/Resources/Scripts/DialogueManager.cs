@@ -25,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     public RecipeManager recipeManager;
     private bool answer;
     public LiquidGenerator liquidGenerator;
+    public bool skip;
 
     private void Awake()
     {
@@ -41,9 +42,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !yesBox.activeInHierarchy && (textArrow.activeInHierarchy || textCircle.activeInHierarchy) && !answerArrow.activeInHierarchy)
+        if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && !yesBox.activeInHierarchy && (textArrow.activeInHierarchy || textCircle.activeInHierarchy) && !answerArrow.activeInHierarchy)
         {
             DisplayNextSentence();
+        }
+        else if ((Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2")) && !yesBox.activeInHierarchy && (!textArrow.activeInHierarchy && !textCircle.activeInHierarchy) && !answerArrow.activeInHierarchy)
+        {
+            // Skip to end of sentence
+            skip = true;
         }
 
         if (answerArrow.activeInHierarchy)
@@ -132,6 +138,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
+        skip = false;
         if (textCircle.activeInHierarchy)
         {
             EndDialogue();
@@ -171,7 +178,10 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     dialogueText.text += sentence.ToCharArray()[stoppedAtCharIndex + i];
-                    yield return new WaitForSeconds(-1);
+                    if (!skip)
+                    {
+                        yield return null;
+                    }
                 }
             }
 

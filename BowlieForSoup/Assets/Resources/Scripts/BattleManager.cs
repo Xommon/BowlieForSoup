@@ -196,4 +196,12 @@ public class BattleManager : MonoBehaviour
             turn = turnOrder[turnOrder.IndexOf(turn) + 1];
         }
     }
+
+    public void StartTurn(Battler battler)
+    {
+        if (battler.name == "PlayerBattle")
+        {
+            //BattleHUD.
+        }
+    }
 }

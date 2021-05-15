@@ -7,7 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     // Overworld Stats
     public float walkingSpeed;
-    public int fill;
 
     // References
     public GameManager gameManager;
@@ -15,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public DialogueTrigger npc;
     public DialogueManager dialogueManager;
-    public TextMeshProUGUI fillDisplay;
     public LevelLoader levelLoader;
 
     private void Start()
@@ -24,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
         battleManager = FindObjectOfType<BattleManager>();
         dialogueManager = FindObjectOfType<DialogueManager>();
         levelLoader = FindObjectOfType<LevelLoader>();
-        fillDisplay = GameObject.Find("FillDisplayText").GetComponent<TextMeshProUGUI>();
         transform.position = gameManager.savedPlayerPosition;
         gameManager.player = this;
     }
@@ -46,9 +43,6 @@ public class PlayerMovement : MonoBehaviour
         {
             npc.GetComponent<DialogueTrigger>().TriggerDialogue();
         }
-
-        // Update fill display
-        fillDisplay.text = fill + "%";
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

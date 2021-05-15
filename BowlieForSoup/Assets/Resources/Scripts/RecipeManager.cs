@@ -8,6 +8,7 @@ public class RecipeManager : MonoBehaviour
     public string currentRecipe;
     public Dictionary<string, int> ingredientsList = new Dictionary<string, int>();
     public PlayerMovement player;
+    public GameManager gameManager;
 
     // HUD
     public TextMeshProUGUI recipeText;
@@ -16,6 +17,7 @@ public class RecipeManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void UploadNewRecipe(string recipeName, string[] ingredientsNeeded, int[] amountOfIngredientsNeeded)
@@ -41,19 +43,19 @@ public class RecipeManager : MonoBehaviour
 
     public int RateSoup()
     {
-        if (player.fill >= 95)
+        if (gameManager.playerFill >= 95)
         {
             return 5;
         }
-        else if (player.fill >= 90)
+        else if (gameManager.playerFill >= 90)
         {
             return 4;
         }
-        else if (player.fill >= 80)
+        else if (gameManager.playerFill >= 80)
         {
             return 3;
         }
-        else if (player.fill >= 70)
+        else if (gameManager.playerFill >= 70)
         {
             return 2;
         }

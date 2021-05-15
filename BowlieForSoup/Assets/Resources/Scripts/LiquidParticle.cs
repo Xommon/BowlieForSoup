@@ -25,13 +25,24 @@ public class LiquidParticle : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.freezeOverworld)
+        // Freeze
+        if (gameManager.freezeOverworld && SceneManager.GetActiveScene().name != "Battle")
         {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
             rb.constraints = RigidbodyConstraints2D.None;
+        }
+
+        // Adjust gravity
+        if (SceneManager.GetActiveScene().name == "Battle")
+        {
+            rb.gravityScale = 4;
+        }
+        else
+        {
+            rb.gravityScale = 1;
         }
 
         if (inBowl)
@@ -48,6 +59,10 @@ public class LiquidParticle : MonoBehaviour
             if (SceneManager.GetActiveScene().name != "Battle")
             {
                 liquidGenerator.liquidCount--;
+            }
+            else
+            {
+                gameManager.playerFill--;
             }
             Destroy(gameObject);
         }

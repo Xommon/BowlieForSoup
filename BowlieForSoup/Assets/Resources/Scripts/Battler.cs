@@ -39,6 +39,8 @@ public class Battler : MonoBehaviour
     public Rigidbody2D rb;
     public string state;
     public int phase;
+    private Battler enemyTrigger;
+    private bool walkHome;
 
     // ATTACKS
     
@@ -86,10 +88,10 @@ public class Battler : MonoBehaviour
         if (name == "PlayerBattle" && battleManager.turn != this)
         {
             rb.gravityScale = 4;
+            transform.position = new Vector3(home.x, transform.position.y, transform.position.z);
 
             if (Input.GetButtonDown("Jump") && transform.position == home)
             {
-                Debug.Log("Jump");
                 rb.velocity = new Vector2(0, 800) * Time.deltaTime;
             }
 
@@ -101,6 +103,12 @@ public class Battler : MonoBehaviour
         else
         {
             rb.gravityScale = 0;
+        }
+
+        // Walk home
+        if (walkHome && transform.position != home)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, home, 3.0f * Time.deltaTime);
         }
 
         // Roll attack
@@ -183,7 +191,6 @@ public class Battler : MonoBehaviour
     // Enemy Attacks
     public IEnumerator Roll()
     {
-        Debug.Log("Phase 0");
         phase = 0; // Get into position
         state = "Roll";
 
@@ -197,5 +204,32 @@ public class Battler : MonoBehaviour
     {
         phase = 0; // Get into position
         state = "Tackle";
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (name == "PlayerBattle")
+        {
+            enemyTrigger = collision.GetComponent<Battler>();
+        }
+
+        // Player hops when hit
+        if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll")
+        {
+            rb.gravityScale = 0;
+            rb.velocity = new Vector2(200, 300) * Time.deltaTime;
+            StartCoroutine(WalkHome());
+        }
+    }
+
+    public IEnumerator WalkHome()
+    {
+        yield return new WaitForSeconds(1.0f);
+        walkHome = true;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        
     }
 }

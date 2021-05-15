@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class LiquidInBowl : MonoBehaviour
 {
     public PlayerMovement player;
+    public GameManager gameManager;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +20,7 @@ public class LiquidInBowl : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name != "Battle")
             {
-                player.fill++;
+                gameManager.playerFill++;
             }
             collision.GetComponent<LiquidParticle>().inBowl = true;
         }
@@ -30,7 +32,7 @@ public class LiquidInBowl : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name != "Battle")
             {
-                player.fill--;
+                gameManager.playerFill--;
             }
             collision.GetComponent<LiquidParticle>().inBowl = false;
         }
