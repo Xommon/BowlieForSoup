@@ -36,12 +36,22 @@ public class Battler : MonoBehaviour
     public Vector3 home;
     public bool attacking;
     public BattleManager battleManager;
+    public Rigidbody2D rb;
+    public string state;
+    public int phase;
+
+    // ATTACKS
+    
+    // Roll
+    public float momentum;
+    public float launchSpeed;
 
     private void Start()
     {
         // References
         sr = GetComponent<SpriteRenderer>();
         battleManager = FindObjectOfType<BattleManager>();
+        rb = GetComponent<Rigidbody2D>();
 
         // Create the player's stats
         if (gameObject.name == "PlayerBattle")
@@ -59,6 +69,10 @@ public class Battler : MonoBehaviour
             currentLuck = luck;
         }
 
+        // Set stats
+        phase = 0;
+        state = "";
+
         // Start Battle
         if (gameObject.name == "PlayerBattle")
         {
@@ -68,9 +82,82 @@ public class Battler : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position != home && !attacking)
+        // Give player gravity briefly
+        if (name == "PlayerBattle" && battleManager.turn != this)
         {
-            Vector3.MoveTowards(transform.position, home, 1.0f);
+            rb.gravityScale = 4;
+
+            if (Input.GetButtonDown("Jump") && transform.position == home)
+            {
+                Debug.Log("Jump");
+                rb.velocity = new Vector2(0, 800) * Time.deltaTime;
+            }
+
+            if (transform.position.y < 0)
+            {
+                transform.position = home;
+            }
+        }
+        else
+        {
+            rb.gravityScale = 0;
+        }
+
+        // Roll attack
+        if (state == "Roll")
+        {
+            if (phase == 0)
+            {
+                if (transform.position != Vector3.zero)
+                {
+                    // Get into position to attack
+                    transform.position = Vector2.MoveTowards(transform.position, Vector3.zero, 4.0f * Time.deltaTime);
+                }
+                else
+                {
+                    // Position ready
+                    phase = 1;
+                    momentum = 0.5f;
+                }
+            }
+            else if (phase == 1)
+            {
+                // Start rotating
+                momentum *= 1.025f;
+                transform.Rotate(0, 0, momentum);
+            }
+            else if (phase == 2)
+            {
+                // Launch at player
+                if (transform.position.x > -11.0f)
+                {
+                    transform.Rotate(0, 0, momentum);
+                    transform.position += new Vector3(-launchSpeed, 0, 0);
+                }
+                else
+                {
+                    transform.position = new Vector3(11.0f, home.y, 0);
+                    phase = 3; // Return home
+                }
+            }
+            else if (phase == 3)
+            {
+                if (transform.position.x > home.x)
+                {
+                    // Return home
+                    transform.Rotate(0, 0, momentum / 4);
+                    transform.position += new Vector3(-0.15f, 0, 0);
+                }
+                else
+                {
+                    // End attack
+                    transform.position = home;
+                    transform.rotation = Quaternion.identity;
+                    state = "";
+                    phase = 0;
+                    battleManager.EndTurn();
+                }
+            }
         }
     }
 
@@ -89,5 +176,26 @@ public class Battler : MonoBehaviour
         currentDefence = defence;
         currentSpeed = speed;
         currentLuck = luck;
+    }
+
+    // Player Attacks
+
+    // Enemy Attacks
+    public IEnumerator Roll()
+    {
+        Debug.Log("Phase 0");
+        phase = 0; // Get into position
+        state = "Roll";
+
+        float launchTime = Random.Range(2.5f, 5.0f);
+        launchSpeed = Random.Range(0.1f, 0.3f);
+        yield return new WaitForSeconds(launchTime);
+        phase = 2; // Launch toward player
+    }
+
+    public void Tackle()
+    {
+        phase = 0; // Get into position
+        state = "Tackle";
     }
 }

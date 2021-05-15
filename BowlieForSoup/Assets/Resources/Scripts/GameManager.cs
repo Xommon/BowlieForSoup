@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
         deltaTime += Time.deltaTime;
         deltaTime /= 2.0f;
         fpsText.text = ((int)(1.0f / deltaTime)).ToString();
-        playerFill = player.fill;
+        if (player != null)
+        {
+            playerFill = player.fill;
+        }
     }
 }

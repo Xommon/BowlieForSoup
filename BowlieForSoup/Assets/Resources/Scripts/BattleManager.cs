@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public GameObject battleMenuArrow;
     public List<Battler> turnOrder = new List<Battler>();
     public Battler firstEnemy;
+    public Battler playerBattle;
     public Battler turn;
 
     // Enemy battle stats
@@ -151,15 +152,23 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleStart()
     {
+        Debug.Log("Battle Start");
+        // Compile list of enemies
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            enemies.Add(enemy.GetComponent<Battler>());
+        }
+
         // Calculate enemy stats
         GameObject.Find("EnemyBattle").GetComponent<Battler>().CreateEnemyStats(enemyIngredient, enemyLevel);
-        // Upload Enemy's stats
-        /*firstEnemy = GameObject.Find("EnemyBattle").GetComponent<Battler>();
-        firstEnemy.level = enemyStats[0];
-        firstEnemy.attack = enemyStats[1];
-        firstEnemy.defence = enemyStats[2];
-        firstEnemy.speed = enemyStats[3];
-        firstEnemy.luck = enemyStats[4];*/
+
+        // Upload player stats
+        playerBattle = GameObject.Find("PlayerBattle").GetComponent<Battler>();
+        playerBattle.level = level;
+        playerBattle.attack = attack;
+        playerBattle.defence = defence;
+        playerBattle.speed = speed;
+        playerBattle.luck = luck;
 
         // Sort battlers from quickest to slowest
         foreach (Battler battler in FindObjectsOfType<Battler>())
@@ -167,8 +176,24 @@ public class BattleManager : MonoBehaviour
             turnOrder.Add(battler);
         }
         turnOrder = turnOrder.OrderBy(w => w.GetComponent<Battler>().speed).ToList();
+        turnOrder.Reverse();
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
         turn = turnOrder[0];
+        Debug.Log(turnOrder[0].name + "'s turn");
+        StartCoroutine(GameObject.Find("EnemyBattle").GetComponent<Battler>().Roll());
+    }
+
+    public void EndTurn()
+    {
+        // Start Battler's next turn
+        if (turnOrder.IndexOf(turn) == turnOrder.Count - 1)
+        {
+            turn = turnOrder[0];
+        }
+        else
+        {
+            turn = turnOrder[turnOrder.IndexOf(turn) + 1];
+        }
     }
 }
