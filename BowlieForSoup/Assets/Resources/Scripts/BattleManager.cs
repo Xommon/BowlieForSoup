@@ -188,6 +188,10 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
+        // Reset state and phase
+        turn.state = "";
+        turn.phase = 0;
+
         // Start Battler's next turn
         if (turnOrder.IndexOf(turn) == turnOrder.Count - 1)
         {
@@ -202,6 +206,12 @@ public class BattleManager : MonoBehaviour
 
     public void BetweenTurns()
     {
+        // Disable damage bubbles
+        foreach (Battler battler in turnOrder)
+        {
+            battler.damageBubble.SetActive(false);
+        }
+
         if (turnOrder.Count == 1)
         {
             // All enemies vanquished
@@ -215,10 +225,8 @@ public class BattleManager : MonoBehaviour
 
     public void StartTurn(Battler battler)
     {
-        Debug.Log(0);
         if (battler.name == "PlayerBattle")
         {
-            Debug.Log(1);
             // Player's turn
             battleHUD.battleMenu.SetActive(true);
             battleHUD.selection = battleHUD.attackButton;
@@ -228,7 +236,6 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(2);
             // Enemy's turn
             StartCoroutine(turn.Roll());
         }

@@ -563,6 +563,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   state: 
   phase: 0
+  walkHome: 0
   damageBubble: {fileID: 370010465}
   damageText: {fileID: 795278561}
   gameManager: {fileID: 0}
@@ -1117,6 +1118,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   state: 
   phase: 0
+  walkHome: 0
   damageBubble: {fileID: 838334869}
   damageText: {fileID: 711513473}
   gameManager: {fileID: 0}

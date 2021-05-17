@@ -41,7 +41,7 @@ public class Battler : MonoBehaviour
     public string state;
     public int phase;
     private Battler enemyTrigger;
-    private bool walkHome;
+    public bool walkHome;
     public GameObject damageBubble;
     public TextMesh damageText;
     public GameManager gameManager;
@@ -117,6 +117,10 @@ public class Battler : MonoBehaviour
                 transform.position = home;
             }
         }
+        else if (name == "PlayerBattle" && transform.position != home)
+        {
+            rb.gravityScale = 4;
+        }
         else
         {
             rb.gravityScale = 0;
@@ -164,6 +168,7 @@ public class Battler : MonoBehaviour
             {
                 state = "";
                 phase = 0;
+                walkHome = false;
                 battleManager.EndTurn();
             }
         }
@@ -194,14 +199,14 @@ public class Battler : MonoBehaviour
             else if (phase == 2)
             {
                 // Launch at player
-                if (transform.position.x > -11.0f)
+                if (transform.position.x > -10.5f)
                 {
                     transform.Rotate(0, 0, momentum);
                     transform.position += new Vector3(-launchSpeed, 0, 0);
                 }
                 else
                 {
-                    transform.position = new Vector3(11.0f, home.y, 0);
+                    transform.position = new Vector3(10.5f, home.y, 0);
                     phase = 3; // Return home
                 }
             }
@@ -219,7 +224,8 @@ public class Battler : MonoBehaviour
                     transform.position = home;
                     transform.rotation = Quaternion.identity;
                     state = "";
-                    phase = 0;
+                    walkHome = false;
+                    momentum = 0;
                     battleManager.EndTurn();
                 }
             }
@@ -297,7 +303,18 @@ public class Battler : MonoBehaviour
         state = "Roll";
 
         float launchTime = Random.Range(3.5f, 4.5f);
-        launchSpeed = Random.Range(0.1f, 0.1f);
+        if (level < 10)
+        {
+            launchSpeed = Random.Range(0.05f, 0.1f);
+        }
+        else if (level < 20)
+        {
+            launchSpeed = Random.Range(0.1f, 0.2f);
+        }
+        else
+        {
+            launchSpeed = Random.Range(0.1f, 0.3f);
+        }
         yield return new WaitForSeconds(launchTime);
         phase = 2; // Launch toward player
     }
@@ -350,6 +367,9 @@ public class Battler : MonoBehaviour
             forkObject.SetActive(false);
         }
 
-        walkHome = true;
+        if (battleManager.turn = this)
+        {
+            walkHome = true;
+        }
     }
 }

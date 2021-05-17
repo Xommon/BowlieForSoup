@@ -1,3 +1,12 @@
+PROBLEMS:
+- liquid slows down game
+- liquid goes through bowl
+- camera off-centre after battle
+
+playerShadow.transform.position
+rb.gravityScale
+rb.velocity
+
 Bowlie For Soup (Get the Legal Rights)
 /balance liquid
 /npc that tells you what soups to make 
