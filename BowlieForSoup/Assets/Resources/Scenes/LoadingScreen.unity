@@ -162,6 +162,8 @@ MonoBehaviour:
   turn: {fileID: 0}
   battleHUD: {fileID: 0}
   levelLoader: {fileID: 0}
+  enemyPrefab: {fileID: 6330092148834341071, guid: 3f63d02422741c1448326e0a3a0337a3,
+    type: 3}
   enemyIngredient: {fileID: 0}
   enemyLevel: 0
   level: 7

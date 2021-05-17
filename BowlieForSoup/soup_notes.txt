@@ -2,6 +2,7 @@ PROBLEMS:
 - liquid slows down game
 - liquid goes through bowl
 - camera off-centre after battle
+- enemy sometimes double attacks
 
 playerShadow.transform.position
 rb.gravityScale

@@ -129,7 +129,7 @@ public class Battler : MonoBehaviour
         // Walk home
         if (walkHome && transform.position != home)
         {
-            transform.position = Vector2.MoveTowards(transform.position, home, 3.0f * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, home, 6.0f * Time.deltaTime);
         }
 
         // Indicate target
@@ -167,7 +167,6 @@ public class Battler : MonoBehaviour
             else if (phase == 2 && transform.position == home)
             {
                 state = "";
-                phase = 0;
                 walkHome = false;
                 battleManager.EndTurn();
             }
@@ -234,6 +233,16 @@ public class Battler : MonoBehaviour
         // Die if health is depleted
         if (name != "PlayerBattle" && currentHealth <= 0 && health > 0)
         {
+            // Create children
+            foreach(Ingredient childIngredient in ingredient.children)
+            {
+                Battler newEnemy = Instantiate(battleManager.enemyPrefab);
+                newEnemy.CreateEnemyStats(childIngredient, level);
+                battleManager.turnOrder.Add(newEnemy);
+                battleManager.enemies.Add(newEnemy);
+                newEnemy.walkHome = true;
+            }
+
             battleManager.turnOrder.Remove(this);
             Destroy(gameObject);
         }
@@ -266,22 +275,25 @@ public class Battler : MonoBehaviour
 
     IEnumerator KnifeDamage()
     {
-        // Do damage to enemy
-        //damaged = true;
-        int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 1.0f, target.currentAttack * 1.5f) - (target.currentDefence / 2);
-        if (Random.Range(0, 101) < battleManager.playerBattle.currentLuck)
-        {
-            damage *= 2;
-        }
+        yield return new WaitForSeconds(0.25f);
 
+        // Do damage to enemy
+        int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 1.0f, target.currentAttack * 1.5f) - (target.currentDefence / 2);
+        target.damageBubble.SetActive(true);
         if (damage < 0)
         {
             damage = 0;
         }
+        if (Random.Range(0, 101) < battleManager.playerBattle.currentLuck)
+        {
+            damage *= 2;
+            target.damageText.text = "Critical Hit!\n" + damage.ToString();
+        }
+        else
+        {
+            target.damageText.text = damage.ToString();
+        }
 
-        yield return new WaitForSeconds(0.25f);
-        target.damageBubble.SetActive(true);
-        target.damageText.text = damage.ToString();
         target.currentHealth -= damage;
         StartCoroutine(WalkHome());
     }
@@ -305,7 +317,7 @@ public class Battler : MonoBehaviour
         float launchTime = Random.Range(3.5f, 4.5f);
         if (level < 10)
         {
-            launchSpeed = Random.Range(0.05f, 0.1f);
+            launchSpeed = Random.Range(0.1f, 0.1f);
         }
         else if (level < 20)
         {
@@ -313,7 +325,7 @@ public class Battler : MonoBehaviour
         }
         else
         {
-            launchSpeed = Random.Range(0.1f, 0.3f);
+            launchSpeed = Random.Range(0.04f, 0.3f);
         }
         yield return new WaitForSeconds(launchTime);
         phase = 2; // Launch toward player
@@ -338,6 +350,16 @@ public class Battler : MonoBehaviour
             // Do damage to player
             damaged = true;
             int damage = (int)Random.Range(enemyTrigger.currentAttack * 0.8f, enemyTrigger.currentAttack * 1.2f) - (currentDefence / 2);
+            damageBubble.SetActive(true);
+            if (Random.Range(0, 101) < enemyTrigger.currentLuck)
+            {
+                damage *= 2;
+                damageText.text = "Critical Hit!\n" + damage.ToString();
+            }
+            else
+            {
+                damageText.text = damage.ToString();
+            }
             if (damage < 0)
             {
                 damage = 0;
@@ -346,8 +368,6 @@ public class Battler : MonoBehaviour
             {
                 damage = 100;
             }
-            damageBubble.SetActive(true);
-            damageText.text = damage.ToString();
             gameManager.playerFill -= damage;
 
             rb.gravityScale = 0;

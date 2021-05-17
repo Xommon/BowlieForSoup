@@ -15,6 +15,7 @@ public class BattleManager : MonoBehaviour
     public Battler turn;
     public BattleHUD battleHUD;
     public LevelLoader levelLoader;
+    public Battler enemyPrefab;
 
     // Enemy battle stats
     public Ingredient enemyIngredient;
@@ -188,9 +189,16 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
+        Debug.Log("Turn end: " + turn.name);
         // Reset state and phase
         turn.state = "";
         turn.phase = 0;
+
+        // Disable walking home
+        foreach (Battler battler in turnOrder)
+        {
+            battler.walkHome = false;
+        }
 
         // Start Battler's next turn
         if (turnOrder.IndexOf(turn) == turnOrder.Count - 1)
@@ -225,6 +233,7 @@ public class BattleManager : MonoBehaviour
 
     public void StartTurn(Battler battler)
     {
+        Debug.Log("Turn start: " + turn.name);
         if (battler.name == "PlayerBattle")
         {
             // Player's turn
