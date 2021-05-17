@@ -8,10 +8,12 @@ public class LevelLoader : MonoBehaviour
     public Animator transition;
     public float transitionTime = 1.1f;
     public GameManager gameManager;
+    public BattleManager battleManager;
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        battleManager = FindObjectOfType<BattleManager>();
     }
 
     private void OnEnable()
@@ -34,6 +36,12 @@ public class LevelLoader : MonoBehaviour
         }
         else
         {
+            // Destroy enemy in overworld
+            if (SceneManager.GetActiveScene().buildIndex == 1 && battleManager.battleInstanceFromOverworld != "")
+            {
+                Destroy(GameObject.Find(battleManager.battleInstanceFromOverworld));
+                battleManager.battleInstanceFromOverworld = "";
+            }
             StartCoroutine(UnfreezeOverworld());
             transition.gameObject.SetActive(true);
             transition.Play("blocktransition_end");

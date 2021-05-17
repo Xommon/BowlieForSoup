@@ -15,9 +15,11 @@ public class BattleHUD : MonoBehaviour
     public GameObject fleeButton;
     public GameObject selection;
     public GameObject weaponMenu;
-    public GameObject weaponMenuArrow;
+    public RectTransform weaponMenuArrow;
     public int weaponIndex;
-    public List<Action> attacks = new List<Action>();
+    public List<string> attacks = new List<string>();
+    public Battler playerBattle;
+    public bool reset;
 
     private void Start()
     {
@@ -27,65 +29,145 @@ public class BattleHUD : MonoBehaviour
         battleManager.animatorHUD = animator;
         animator.StopPlayback();
         selection = attackButton;
+
+        // Populate attacks
+        attacks.Add("KnifeAttack");
+        attacks.Add("SpoonAttack");
+        attacks.Add("ForkAttack");
     }
 
     private void Update()
     {
         // Choose option
-        if (battleManager.turn.name == "PlayerBattle" && !weaponMenu.activeInHierarchy)
+        if (battleManager.turn != null)
         {
-            if (Input.GetAxisRaw("Horizontal") == 1) // Right
+            // Main battle menu
+            if (battleManager.turn.name == "PlayerBattle" && !weaponMenu.activeInHierarchy)
             {
-                if (selection == attackButton)
+                if (Input.GetAxisRaw("Horizontal") == 1) // Right
                 {
-                    selection = itemButton;
+                    if (selection == attackButton)
+                    {
+                        selection = itemButton;
+                    }
+                    else if (selection == shieldButton)
+                    {
+                        selection = fleeButton;
+                    }
                 }
-                else if (selection == shieldButton)
+                else if (Input.GetAxisRaw("Horizontal") == -1) // Left
                 {
-                    selection = fleeButton;
+                    if (selection == itemButton)
+                    {
+                        selection = attackButton;
+                    }
+                    else if (selection == fleeButton)
+                    {
+                        selection = shieldButton;
+                    }
+                }
+                else if (Input.GetAxisRaw("Vertical") == -1) // Down
+                {
+                    if (selection == attackButton)
+                    {
+                        selection = shieldButton;
+                    }
+                    else if (selection == itemButton)
+                    {
+                        selection = fleeButton;
+                    }
+                }
+                else if (Input.GetAxisRaw("Vertical") == 1) // Up
+                {
+                    if (selection == shieldButton)
+                    {
+                        selection = attackButton;
+                    }
+                    else if (selection == fleeButton)
+                    {
+                        selection = itemButton;
+                    }
                 }
             }
-            else if (Input.GetAxisRaw("Horizontal") == -1) // Left
+            else if (battleManager.turn.name == "PlayerBattle" && weaponMenu.activeInHierarchy && battleManager.turn.target == null) 
             {
-                if (selection == itemButton)
+                if (Input.GetButtonDown("Fire1"))
                 {
-                    selection = attackButton;
+                    // Once the player chooses and attack, move to chosing a target
+                    float shortestDistance = 10000;
+                    foreach (Battler enemy in battleManager.turnOrder)
+                    {
+                        if (enemy.name != "PlayerBattle")
+                        {
+                            float currentCalculation = Vector2.Distance(battleManager.playerBattle.transform.position, enemy.transform.position);
+                            if (currentCalculation < shortestDistance)
+                            {
+                                shortestDistance = currentCalculation;
+                                battleManager.playerBattle.target = enemy;
+                            }
+                        }
+                    }
                 }
-                else if (selection == fleeButton)
+                else if (Input.GetButtonDown("Fire2"))
                 {
-                    selection = shieldButton;
+                    weaponMenu.SetActive(false);
                 }
             }
-            else if (Input.GetAxisRaw("Vertical") == -1) // Down
+            else if (battleManager.turn.name == "PlayerBattle" && weaponMenu.activeInHierarchy && battleManager.turn.target != null)
             {
-                if (selection == attackButton)
+                // Choose target
+                if (Input.GetAxisRaw("Horizontal") == 1) // Right
                 {
-                    selection = shieldButton;
+
                 }
-                else if (selection == itemButton)
+                else if (Input.GetAxisRaw("Horizontal") == -1) // Left
                 {
-                    selection = fleeButton;
+
                 }
-            }
-            else if (Input.GetAxisRaw("Vertical") == 1) // Up
-            {
-                if (selection == shieldButton)
+                else if (Input.GetAxisRaw("Vertical") == -1) // Down
                 {
-                    selection = attackButton;
+
                 }
-                else if (selection == fleeButton)
+                else if (Input.GetAxisRaw("Vertical") == 1) // Up
                 {
-                    selection = itemButton;
+
+                }
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    // Attack target
+                    if (weaponIndex == 0)
+                    {
+                        battleManager.playerBattle.KnifeAttack();
+                    }
+                    else if (weaponIndex == 1)
+                    {
+                        battleManager.playerBattle.SpoonAttack();
+                    }
+                    else if (weaponIndex == 2)
+                    {
+                        battleManager.playerBattle.ForkAttack();
+                    }
+
+                    weaponMenuArrow.gameObject.SetActive(false);
+                    weaponMenu.SetActive(false);
+                    battleMenu.SetActive(false);
+                }
+                else if (Input.GetButtonDown("Fire2"))
+                {
+                    // Go back to choose attack
+                    battleManager.playerBattle.target = null;
                 }
             }
         }
 
         // Select atack
-        if (weaponMenu.activeInHierarchy)
+        if (weaponMenu.activeInHierarchy && battleManager.playerBattle.target == null)
         {
-            weaponMenuArrow.transform.position = new Vector3(-325, (weaponIndex * 60) - 50, 0);
-            if (Input.GetAxisRaw("Vertical") == 1)
+            weaponMenuArrow.anchoredPosition = new Vector3(-325, (weaponIndex * 55) - 50, 0);
+            if (Input.GetAxisRaw("Vertical") == 1 && reset)
             {
+                reset = false;
                 if (weaponIndex + 1 == attacks.Count)
                 {
                     weaponIndex = 0;
@@ -95,8 +177,9 @@ public class BattleHUD : MonoBehaviour
                     weaponIndex++;
                 }
             }
-            else if(Input.GetAxisRaw("Vertical") == -1)
+            else if(Input.GetAxisRaw("Vertical") == -1 && reset)
             {
+                reset = false;
                 if (weaponIndex == 0)
                 {
                     weaponIndex = attacks.Count - 1;
@@ -105,6 +188,10 @@ public class BattleHUD : MonoBehaviour
                 {
                     weaponIndex--;
                 }
+            }
+            else if(Input.GetAxisRaw("Vertical") == 0)
+            {
+                reset = true;
             }
         }
 
@@ -123,7 +210,7 @@ public class BattleHUD : MonoBehaviour
             {
                 weaponIndex = 0;
                 weaponMenu.SetActive(true);
-                weaponMenuArrow.SetActive(true);
+                weaponMenuArrow.gameObject.SetActive(true);
             }
 
         }
@@ -133,7 +220,7 @@ public class BattleHUD : MonoBehaviour
             if (weaponMenu.activeInHierarchy)
             {
                 weaponMenu.SetActive(false);
-                weaponMenuArrow.SetActive(false);
+                weaponMenuArrow.gameObject.SetActive(false);
             }
         }
 

@@ -4479,7 +4479,7 @@ Transform:
   m_GameObject: {fileID: 151316704}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7, y: 11.35, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.33, y: 0.33, z: 1}
   m_Children:
   - {fileID: 671737264}
   m_Father: {fileID: 0}
@@ -6236,15 +6236,16 @@ SpriteRenderer:
   m_SortingLayerID: -44025399
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1566518875110761268, guid: f9d3454cc4588764784bd0dc027c8d14,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.29}
+  m_Size: {x: 1.9304714, y: 1.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &249203692
@@ -6256,7 +6257,7 @@ Transform:
   m_GameObject: {fileID: 249203690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.52, y: 6.86, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -6295,9 +6296,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.012963295, y: 0}
   serializedVersion: 2
-  m_Radius: 0.16
+  m_Radius: 0.86411476
 --- !u!114 &249203695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6311,7 +6312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredient: {fileID: 11400000, guid: 1b6de665ca5a50c4aa5861a796c2f329, type: 2}
-  level: 9
+  level: 1
   sr: {fileID: 249203691}
 --- !u!1001 &253857925
 PrefabInstance:
@@ -14486,6 +14487,7 @@ MonoBehaviour:
     - 'Good job! The soup turned out nice. '
     - 'Unfortunately, you didn''t get this soup up to expected standards. Try making
       it again. '
+  languageManager: {fileID: 0}
 --- !u!1 &801565036
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,9 +51,10 @@ public class PlayerMovement : MonoBehaviour
         {
             // Download the enemy's stats
             EnemyMovement collisionEnemy = collision.gameObject.GetComponent<EnemyMovement>();
-            battleManager.battleInstanceFromOverworld = collision.gameObject;
+            battleManager.battleInstanceFromOverworld = collision.gameObject.name;
             battleManager.enemyIngredient = collisionEnemy.ingredient;
             battleManager.enemyLevel = collisionEnemy.level;
+            gameManager.savedPlayerPosition = transform.position;
             levelLoader.LoadLevel(2);
         }
     }

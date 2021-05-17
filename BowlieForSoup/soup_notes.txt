@@ -1,0 +1,353 @@
+Bowlie For Soup (Get the Legal Rights)
+/balance liquid
+/npc that tells you what soups to make 
+?give a little history on soup
+/npc takes and rates your soups
+/HUD shows fill% and recipe HUD shows the veggies
+/need an RPG text engine
+
+6 ingredients with combo turn/live based combat
+/player can jump to avoid attack or block
+/knife attack - extra damage, cuts enemies, some recoil spillage
+spoon attack - medium damage, cannot cut enemies
+fork attack - capture a weak enemy
+flee - you exit the battle
+
+carrot
+tomato
+onion
+beet
+potato
+garlic
+cabbage
+
+celery
+egg
+lemon
+lime
+lentils
+jalapeno
+red chili pepper
+bell pepper
+tofu
+zucchini
+mushroom
+seaweed
+green onion
+noodles
+coconut
+ginger
+eggplant
+pea
+black bean
+pinto bean
+chickpea
+cheese
+pasta
+avocado
+corn
+rice
+cucumber
+okra
+broccoli
+cauliflower
+sweet potato
+purple potato
+plantain
+spinach
+squash
+pumpkin
+leek
+
+Creamy Tomato Soup
+- 4 tomato cubes
+- 1 onion cube
+- garlic
+
+Creamy Carrot Soup [France]
+- 4 carrot cubes
+- 1 onion cube
+- garlic
+
+French Onion Soup [France]
+- 12 onion cubes
+
+Borscht [Ukranian]
+- beets
+- potatoes
+- carrot
+- onion
+- cabbage
+
+Egg Drop Soup [China]
+- egg
+
+Egyptian Lentil Soup [Egypt]
+- lentils
+- onion
+- carrot
+- lemon
+- chili pepper
+
+Goulash [Hungary]
+- bell pepper
+- onion
+- tomato
+- carrot
+- garlic
+- potato
+- chili pepper
+
+Doenjang-jjigae [Korea]
+- zucchini
+- tofu
+- onion
+- chili pepper
+- garlic
+- mushroom
+- potato
+
+Miso Soup [Japan]
+- seaweed
+- tofu
+- green onion
+
+Phở [Vietnam]
+- tofu
+- jalapeno
+- lime
+- noodles
+- mushroom
+- chili pepper
+
+Ramen [Japan]
+- noodles
+- tofu
+- egg
+- green onion
+- mushroom
+- seaweed
+- ginger
+
+Miyeokguk [Korea]
+- seaweed
+- garlic
+- tofu
+
+Red Curry [Thailand]
+- coconut
+- ginger
+- garlic
+- tofu
+- lime
+- bell pepper
+- chili pepper
+
+Yellow Curry [Thailand]
+- coconut
+- ginger
+- garlic
+- tofu
+- lime
+- potato
+- carrot
+
+Green Curry [Thailand]
+- coconut
+- ginger
+- garlic
+- tofu
+- lime
+- peas
+- eggplant
+
+Laksa [Malaysia]
+- coconut
+- ginger
+- tofu
+- lime
+- noodles
+- chili pepper
+- onion
+- green onion
+
+Minestrone [Italy]
+- kidney beans
+- onion
+- celery
+- tomato
+- carrot
+- zucchini
+- pasta
+- cheese
+
+Tortilla Soup [Mexico]
+- black beans
+- corn
+- onion
+- avocado
+- tomato
+- lime
+- jalapeno
+- garlic
+
+Gazpacho [Spain]
+- tomato
+- onion
+- garlic
+- bell pepper
+- cucumber
+
+Gumbo [Louisiana]
+- okra
+- bell pepper
+- onion
+- celery
+- tomato
+- chili pepper
+- garlic
+
+Broccoli Cheese Soup
+- cheese
+- broccoli
+- onion
+- garlic
+- carrots
+
+Chili [Texas]
+- black beans
+- pinto beans
+- onion
+- tomato
+- bell pepper
+- celery
+- garlic
+- corn
+- jalapeno
+
+Corn Chowder [Massachusetts]
+- corn
+- celery
+- carrot
+- onion
+- garlic
+
+Chana Masala [India]
+- chickpea
+- tomato
+- onion
+- garlic
+- ginger
+- chili pepper
+
+New Zealand Sweet Potato [New Zealand]
+- coconut
+- garlic
+- sweet potato
+
+Aussie Pumpkin Soup [Australia]
+- pumpkin
+- potato
+- onion
+
+Plantain Soup [Samoa]
+- onion
+- plantain
+- coconut
+
+Canh Khoai Mỡ [Vietnam]
+- purple potato
+- green onion
+- garlic
+
+Ash Reshteh [Iran]
+- chickpea
+- spinach
+- onion
+- garlic
+- noodles
+
+Ezogelin [Turkey]
+- lentils
+- tomato
+- garlic
+- chili pepper
+- onion
+
+Baked Potato Soup
+- potato
+- green onion
+- onion
+- cheese
+
+Wisconsin Malt Cheese [Wisconsin]
+- cheese
+- celery
+- garlic
+
+Ärtsoppa [Sweden]
+- peas
+- onion
+- carrot
+- ginger
+
+Lagman [Uzbekistan]
+- onion (rings)
+- tomato
+- potato
+- celery
+- garlic
+- mushroom
+- noodles
+
+Harira [Morocco]
+- onion
+- celery
+- carrot
+- chili pepper
+- chickpeas
+- egg
+- lemon
+
+Black Bean Soup [Cuba]
+- black beans
+- onions
+- bell pepper
+- avocado
+
+Brazilian Black Bean [Brazil]
+- jalapeno
+- onion
+- carrot
+- garlic
+- black beans
+- tomato
+- lime
+
+Sancocho [Venezuela]
+- onion
+- garlic
+- leek
+- bell pepper
+- corn
+- potato
+- sweet potato
+- squash
+- plantain
+
+Wedding Soup [Italy]
+- mushroom
+- cheese
+- onion
+- carrot
+- celery
+- garlic
+- pasta
+- spinach
+
+Binignit [Philippines]
+- rice
+- coconut
+- banana
+- taro
+- sweet potato

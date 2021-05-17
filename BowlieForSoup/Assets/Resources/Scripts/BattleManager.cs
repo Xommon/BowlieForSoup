@@ -6,7 +6,7 @@ using System.Linq;
 public class BattleManager : MonoBehaviour
 {
     public List<Battler> enemies = new List<Battler>();
-    public GameObject battleInstanceFromOverworld;
+    public string battleInstanceFromOverworld;
     public Animator animatorHUD;
     public GameObject battleMenuArrow;
     public List<Battler> turnOrder = new List<Battler>();
@@ -14,6 +14,7 @@ public class BattleManager : MonoBehaviour
     public Battler playerBattle;
     public Battler turn;
     public BattleHUD battleHUD;
+    public LevelLoader levelLoader;
 
     // Enemy battle stats
     public Ingredient enemyIngredient;
@@ -30,6 +31,7 @@ public class BattleManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        levelLoader = FindObjectOfType<LevelLoader>();
     }
 
     private void Update()
@@ -181,8 +183,7 @@ public class BattleManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
         turn = turnOrder[0];
-        Debug.Log(turnOrder[0].name + "'s turn");
-        StartCoroutine(GameObject.Find("EnemyBattle").GetComponent<Battler>().Roll());
+        StartTurn(turn);
     }
 
     public void EndTurn()
@@ -196,18 +197,48 @@ public class BattleManager : MonoBehaviour
         {
             turn = turnOrder[turnOrder.IndexOf(turn) + 1];
         }
-        StartTurn(turn);
+        BetweenTurns();
+    }
+
+    public void BetweenTurns()
+    {
+        if (turnOrder.Count == 1)
+        {
+            // All enemies vanquished
+            BattleEnd();
+        }
+        else
+        {
+            StartTurn(turn);
+        }
     }
 
     public void StartTurn(Battler battler)
     {
+        Debug.Log(0);
         if (battler.name == "PlayerBattle")
         {
+            Debug.Log(1);
+            // Player's turn
             battleHUD.battleMenu.SetActive(true);
             battleHUD.selection = battleHUD.attackButton;
             battleHUD.weaponMenu.SetActive(false);
-            battleHUD.weaponMenuArrow.SetActive(false);
+            battleHUD.weaponMenuArrow.gameObject.SetActive(false);
             battleHUD.animator.SetBool("PlayerTurn", true);
         }
+        else
+        {
+            Debug.Log(2);
+            // Enemy's turn
+            StartCoroutine(turn.Roll());
+        }
+    }
+
+    public void BattleEnd()
+    {
+        Debug.Log("Battle End");
+        enemies.Clear();
+        turnOrder.Clear();
+        levelLoader.LoadLevel(1);
     }
 }
