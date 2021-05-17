@@ -38,7 +38,7 @@ public class LiquidParticle : MonoBehaviour
         // Adjust gravity
         if (SceneManager.GetActiveScene().name == "Battle")
         {
-            rb.gravityScale = 4;
+            rb.gravityScale = 1;
         }
         else
         {

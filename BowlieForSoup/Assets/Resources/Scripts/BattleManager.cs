@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
     public Battler firstEnemy;
     public Battler playerBattle;
     public Battler turn;
+    public BattleHUD battleHUD;
 
     // Enemy battle stats
     public Ingredient enemyIngredient;
@@ -36,117 +37,117 @@ public class BattleManager : MonoBehaviour
         // Select standing position for each enemy
         if (enemies.Count == 1)
         {
-            enemies[0].home = new Vector3(6, 0, 0);
+            enemies[0].home = new Vector3(5, 0, 0);
         }
         else if (enemies.Count == 2)
         {
-            enemies[0].home = new Vector3(6, 1.5f, 0);
-            enemies[1].home = new Vector3(6, -1.5f, 0);
+            enemies[0].home = new Vector3(5, 1.5f, 0);
+            enemies[1].home = new Vector3(5, -1.5f, 0);
         }
         else if (enemies.Count == 3)
         {
-            enemies[0].home = new Vector3(6, 1.5f, 0);
-            enemies[1].home = new Vector3(6, -1.5f, 0);
-            enemies[2].home = new Vector3(4, 0, 0);
+            enemies[0].home = new Vector3(5, 1.5f, 0);
+            enemies[1].home = new Vector3(5, -1.5f, 0);
+            enemies[2].home = new Vector3(3, 0, 0);
         }
         else if (enemies.Count == 4)
         {
-            enemies[0].home = new Vector3(6, 1.5f, 0);
-            enemies[1].home = new Vector3(6, -1.5f, 0);
-            enemies[2].home = new Vector3(4, 1.5f, 0);
-            enemies[3].home = new Vector3(4, -1.5f, 0);
+            enemies[0].home = new Vector3(5, 1.5f, 0);
+            enemies[1].home = new Vector3(5, -1.5f, 0);
+            enemies[2].home = new Vector3(3, 1.5f, 0);
+            enemies[3].home = new Vector3(3, -1.5f, 0);
         }
         else if (enemies.Count == 5)
         {
-            enemies[0].home = new Vector3(6, 2.5f, 0);
-            enemies[1].home = new Vector3(6, 0, 0);
-            enemies[2].home = new Vector3(6, -2.5f, 0);
-            enemies[3].home = new Vector3(4, 1.5f, 0);
-            enemies[4].home = new Vector3(4, -1.5f, 0);
+            enemies[0].home = new Vector3(5, 2.5f, 0);
+            enemies[1].home = new Vector3(5, 0, 0);
+            enemies[2].home = new Vector3(5, -2.5f, 0);
+            enemies[3].home = new Vector3(3, 1.5f, 0);
+            enemies[4].home = new Vector3(3, -1.5f, 0);
         }
         else if (enemies.Count == 6)
         {
-            enemies[0].home = new Vector3(6, 2.5f, 0);
-            enemies[1].home = new Vector3(6, 0, 0);
-            enemies[2].home = new Vector3(6, -2.5f, 0);
-            enemies[3].home = new Vector3(4, 2.5f, 0);
-            enemies[4].home = new Vector3(4, 0, 0);
-            enemies[5].home = new Vector3(4, -2.5f, 0);
+            enemies[0].home = new Vector3(5, 2.5f, 0);
+            enemies[1].home = new Vector3(5, 0, 0);
+            enemies[2].home = new Vector3(5, -2.5f, 0);
+            enemies[3].home = new Vector3(3, 2.5f, 0);
+            enemies[4].home = new Vector3(3, 0, 0);
+            enemies[5].home = new Vector3(3, -2.5f, 0);
         }
         else if (enemies.Count == 7)
         {
-            enemies[0].home = new Vector3(6, 3, 0);
-            enemies[1].home = new Vector3(6, 1, 0);
-            enemies[2].home = new Vector3(6, -1, 0);
-            enemies[3].home = new Vector3(6, -3, 0);
-            enemies[4].home = new Vector3(4, 2.5f, 0);
-            enemies[5].home = new Vector3(4, 0, 0);
-            enemies[6].home = new Vector3(4, -2.5f, 0);
+            enemies[0].home = new Vector3(5, 3, 0);
+            enemies[1].home = new Vector3(5, 1, 0);
+            enemies[2].home = new Vector3(5, -1, 0);
+            enemies[3].home = new Vector3(5, -3, 0);
+            enemies[4].home = new Vector3(3, 2.5f, 0);
+            enemies[5].home = new Vector3(3, 0, 0);
+            enemies[6].home = new Vector3(3, -2.5f, 0);
         }
         else if (enemies.Count == 8)
         {
-            enemies[0].home = new Vector3(6, 3, 0);
-            enemies[1].home = new Vector3(6, 1, 0);
-            enemies[2].home = new Vector3(6, -1, 0);
-            enemies[3].home = new Vector3(6, -3, 0);
-            enemies[4].home = new Vector3(4, 3, 0);
-            enemies[5].home = new Vector3(4, 1, 0);
-            enemies[6].home = new Vector3(4, -1, 0);
-            enemies[7].home = new Vector3(4, -3, 0);
+            enemies[0].home = new Vector3(5, 3, 0);
+            enemies[1].home = new Vector3(5, 1, 0);
+            enemies[2].home = new Vector3(5, -1, 0);
+            enemies[3].home = new Vector3(5, -3, 0);
+            enemies[4].home = new Vector3(3, 3, 0);
+            enemies[5].home = new Vector3(3, 1, 0);
+            enemies[6].home = new Vector3(3, -1, 0);
+            enemies[7].home = new Vector3(3, -3, 0);
         }
         else if (enemies.Count == 9)
         {
-            enemies[0].home = new Vector3(6, 2, 0);
-            enemies[1].home = new Vector3(6, 0, 0);
-            enemies[2].home = new Vector3(6, -2, 0);
-            enemies[3].home = new Vector3(4, 2, 0);
-            enemies[4].home = new Vector3(4, 0, 0);
-            enemies[5].home = new Vector3(4, -2, 0);
-            enemies[6].home = new Vector3(2, 2, 0);
-            enemies[7].home = new Vector3(2, 0, 0);
-            enemies[8].home = new Vector3(2, -2, 0);
+            enemies[0].home = new Vector3(5, 2, 0);
+            enemies[1].home = new Vector3(5, 0, 0);
+            enemies[2].home = new Vector3(5, -2, 0);
+            enemies[3].home = new Vector3(3, 2, 0);
+            enemies[4].home = new Vector3(3, 0, 0);
+            enemies[5].home = new Vector3(3, -2, 0);
+            enemies[6].home = new Vector3(1, 2, 0);
+            enemies[7].home = new Vector3(1, 0, 0);
+            enemies[8].home = new Vector3(1, -2, 0);
         }
         else if (enemies.Count == 10)
         {
-            enemies[0].home = new Vector3(6, 2, 0);
-            enemies[1].home = new Vector3(6, 0, 0);
-            enemies[2].home = new Vector3(6, -2, 0);
-            enemies[3].home = new Vector3(4, 3, 0);
-            enemies[4].home = new Vector3(4, 1, 0);
-            enemies[5].home = new Vector3(4, -1, 0);
-            enemies[6].home = new Vector3(4, -3, 0);
-            enemies[7].home = new Vector3(2, 2, 0);
-            enemies[8].home = new Vector3(2, 0, 0);
-            enemies[9].home = new Vector3(2, -2, 0);
+            enemies[0].home = new Vector3(5, 2, 0);
+            enemies[1].home = new Vector3(5, 0, 0);
+            enemies[2].home = new Vector3(5, -2, 0);
+            enemies[3].home = new Vector3(3, 3, 0);
+            enemies[4].home = new Vector3(3, 1, 0);
+            enemies[5].home = new Vector3(3, -1, 0);
+            enemies[6].home = new Vector3(3, -3, 0);
+            enemies[7].home = new Vector3(1, 2, 0);
+            enemies[8].home = new Vector3(1, 0, 0);
+            enemies[9].home = new Vector3(1, -2, 0);
         }
         else if (enemies.Count == 12)
         {
-            enemies[0].home = new Vector3(6, 3, 0);
-            enemies[1].home = new Vector3(6, 1, 0);
-            enemies[2].home = new Vector3(6, -1, 0);
-            enemies[3].home = new Vector3(6, -3, 0);
-            enemies[4].home = new Vector3(4, 3, 0);
-            enemies[5].home = new Vector3(4, 1, 0);
-            enemies[6].home = new Vector3(4, -1, 0);
-            enemies[7].home = new Vector3(4, -3, 0);
-            enemies[8].home = new Vector3(2, 2, 0);
-            enemies[9].home = new Vector3(2, 0, 0);
-            enemies[10].home = new Vector3(2, -2, 0);
+            enemies[0].home = new Vector3(5, 3, 0);
+            enemies[1].home = new Vector3(5, 1, 0);
+            enemies[2].home = new Vector3(5, -1, 0);
+            enemies[3].home = new Vector3(5, -3, 0);
+            enemies[4].home = new Vector3(3, 3, 0);
+            enemies[5].home = new Vector3(3, 1, 0);
+            enemies[6].home = new Vector3(3, -1, 0);
+            enemies[7].home = new Vector3(3, -3, 0);
+            enemies[8].home = new Vector3(1, 2, 0);
+            enemies[9].home = new Vector3(1, 0, 0);
+            enemies[10].home = new Vector3(1, -2, 0);
         }
         else if (enemies.Count == 11)
         {
-            enemies[0].home = new Vector3(6, 3, 0);
-            enemies[1].home = new Vector3(6, 1, 0);
-            enemies[2].home = new Vector3(6, -1, 0);
-            enemies[3].home = new Vector3(6, -3, 0);
-            enemies[4].home = new Vector3(4, 3, 0);
-            enemies[5].home = new Vector3(4, 1, 0);
-            enemies[6].home = new Vector3(4, -1, 0);
-            enemies[7].home = new Vector3(4, -3, 0);
-            enemies[8].home = new Vector3(2, 3, 0);
-            enemies[9].home = new Vector3(2, 1, 0);
-            enemies[10].home = new Vector3(2, -1, 0);
-            enemies[11].home = new Vector3(2, -3, 0);
+            enemies[0].home = new Vector3(5, 3, 0);
+            enemies[1].home = new Vector3(5, 1, 0);
+            enemies[2].home = new Vector3(5, -1, 0);
+            enemies[3].home = new Vector3(5, -3, 0);
+            enemies[4].home = new Vector3(3, 3, 0);
+            enemies[5].home = new Vector3(3, 1, 0);
+            enemies[6].home = new Vector3(3, -1, 0);
+            enemies[7].home = new Vector3(3, -3, 0);
+            enemies[8].home = new Vector3(1, 3, 0);
+            enemies[9].home = new Vector3(1, 1, 0);
+            enemies[10].home = new Vector3(1, -1, 0);
+            enemies[11].home = new Vector3(1, -3, 0);
         }
     }
 
@@ -195,13 +196,18 @@ public class BattleManager : MonoBehaviour
         {
             turn = turnOrder[turnOrder.IndexOf(turn) + 1];
         }
+        StartTurn(turn);
     }
 
     public void StartTurn(Battler battler)
     {
         if (battler.name == "PlayerBattle")
         {
-            //BattleHUD.
+            battleHUD.battleMenu.SetActive(true);
+            battleHUD.selection = battleHUD.attackButton;
+            battleHUD.weaponMenu.SetActive(false);
+            battleHUD.weaponMenuArrow.SetActive(false);
+            battleHUD.animator.SetBool("PlayerTurn", true);
         }
     }
 }

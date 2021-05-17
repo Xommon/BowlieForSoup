@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Battler : MonoBehaviour
 {
@@ -41,6 +42,10 @@ public class Battler : MonoBehaviour
     public int phase;
     private Battler enemyTrigger;
     private bool walkHome;
+    public GameObject damageBubble;
+    public TextMesh damageText;
+    public GameManager gameManager;
+    public bool damaged;
 
     // ATTACKS
     
@@ -54,6 +59,7 @@ public class Battler : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         battleManager = FindObjectOfType<BattleManager>();
         rb = GetComponent<Rigidbody2D>();
+        gameManager = FindObjectOfType<GameManager>();
 
         // Create the player's stats
         if (gameObject.name == "PlayerBattle")
@@ -116,22 +122,22 @@ public class Battler : MonoBehaviour
         {
             if (phase == 0)
             {
-                if (transform.position != Vector3.zero)
+                if (transform.position != new Vector3(-1, 0, 0))
                 {
                     // Get into position to attack
-                    transform.position = Vector2.MoveTowards(transform.position, Vector3.zero, 4.0f * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 4.0f * Time.deltaTime);
                 }
                 else
                 {
                     // Position ready
                     phase = 1;
-                    momentum = 0.5f;
+                    momentum = 1.0f;
                 }
             }
             else if (phase == 1)
             {
                 // Start rotating
-                momentum *= 1.025f;
+                momentum *= 1.02f;
                 transform.Rotate(0, 0, momentum);
             }
             else if (phase == 2)
@@ -194,8 +200,8 @@ public class Battler : MonoBehaviour
         phase = 0; // Get into position
         state = "Roll";
 
-        float launchTime = Random.Range(2.5f, 5.0f);
-        launchSpeed = Random.Range(0.1f, 0.3f);
+        float launchTime = Random.Range(3.5f, 4.5f);
+        launchSpeed = Random.Range(0.1f, 0.1f);
         yield return new WaitForSeconds(launchTime);
         phase = 2; // Launch toward player
     }
@@ -213,11 +219,26 @@ public class Battler : MonoBehaviour
             enemyTrigger = collision.GetComponent<Battler>();
         }
 
-        // Player hops when hit
-        if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll")
+        // Player hit by attack
+        if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll" && !damaged)
         {
+            // Do damage to player
+            damaged = true;
+            int damage = (int)Random.Range(enemyTrigger.currentAttack * 0.8f, enemyTrigger.currentAttack * 1.2f) - (currentDefence / 2);
+            if (damage < 0)
+            {
+                damage = 0;
+            }
+            else if (damage > 100)
+            {
+                damage = 100;
+            }
+            damageBubble.SetActive(true);
+            damageText.text = damage.ToString();
+            gameManager.playerFill -= damage;
+
             rb.gravityScale = 0;
-            rb.velocity = new Vector2(200, 300) * Time.deltaTime;
+            rb.velocity = new Vector2(0, 300) * Time.deltaTime;
             StartCoroutine(WalkHome());
         }
     }
