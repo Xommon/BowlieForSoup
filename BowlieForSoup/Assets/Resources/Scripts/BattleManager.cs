@@ -156,7 +156,6 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator BattleStart()
     {
-        Debug.Log("Battle Start");
         // Compile list of enemies
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
@@ -189,7 +188,6 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurn()
     {
-        Debug.Log("Turn end: " + turn.name);
         // Reset state and phase
         turn.state = "";
         turn.phase = 0;
@@ -219,6 +217,8 @@ public class BattleManager : MonoBehaviour
         {
             battler.damageBubble.SetActive(false);
             battler.damaged = false;
+            battler.rb.gravityScale = 0;
+            battler.transform.position = battler.home;
         }
 
         if (turnOrder.Count == 1)
@@ -234,7 +234,6 @@ public class BattleManager : MonoBehaviour
 
     public void StartTurn(Battler battler)
     {
-        Debug.Log("Turn start: " + turn.name);
         if (battler.name == "PlayerBattle")
         {
             // Player's turn
@@ -253,7 +252,6 @@ public class BattleManager : MonoBehaviour
 
     public void BattleEnd()
     {
-        Debug.Log("Battle End");
         enemies.Clear();
         turnOrder.Clear();
         levelLoader.LoadLevel(1);

@@ -52,6 +52,9 @@ public class Battler : MonoBehaviour
     public GameObject knifeObject;
     public GameObject spoonObject;
     public GameObject forkObject;
+    public bool moreRed;
+    public bool captured;
+    public PlayerIngredients playerIngredients;
 
     // ATTACKS
     // Roll
@@ -65,6 +68,7 @@ public class Battler : MonoBehaviour
         battleManager = FindObjectOfType<BattleManager>();
         rb = GetComponent<Rigidbody2D>();
         gameManager = FindObjectOfType<GameManager>();
+        playerIngredients = FindObjectOfType<PlayerIngredients>();
 
         // Create the player's stats
         if (gameObject.name == "PlayerBattle")
@@ -101,29 +105,61 @@ public class Battler : MonoBehaviour
             playerShadow.transform.position = new Vector3(transform.position.x, playerShadow.transform.position.y, playerShadow.transform.position.z);
         }
 
-        // Give player gravity briefly
-        if (name == "PlayerBattle" && battleManager.turn != this)
+        // Captured enemies spin slightly
+        if (captured)
         {
-            rb.gravityScale = 4;
-            transform.position = new Vector3(home.x, transform.position.y, transform.position.z);
+            transform.Rotate(0, 0, 2);
+        }
 
-            if (Input.GetButtonDown("Jump") && transform.position == home)
+        // Indicate weakness
+        if (name != "PlayerBattle" && currentHealth <= (health / 4))
+        {
+            if (!moreRed)
             {
-                rb.velocity = new Vector2(0, 800) * Time.deltaTime;
+                sr.color -= new Color(0, 0.05f, 0.05f, 0);
+            }
+            else
+            {
+                sr.color += new Color(0, 0.05f, 0.05f, 0);
+            }
+            if (sr.color.b >= 1)
+            {
+                moreRed = false;
+            }
+            else if (sr.color.b <= 0)
+            {
+                moreRed = true;
+            }
+        }
+
+        // Give player gravity briefly
+        if (name == "PlayerBattle")
+        {
+            if (battleManager.turn != this && battleManager.turn != null)
+            {
+                //transform.position = new Vector3(home.x, transform.position.y, transform.position.z);
+                if (Input.GetButtonDown("Fire1") && transform.position == home)
+                {
+                    // Jump
+                    rb.velocity = new Vector2(0, 800) * Time.deltaTime;
+                    rb.gravityScale = 4;
+                }
             }
 
-            if (transform.position.y < 0)
+            if (transform.position.y < home.y && state == "")
             {
+                rb.gravityScale = 0;
+                rb.velocity = Vector3.zero;
                 transform.position = home;
             }
-        }
-        else if (name == "PlayerBattle" && transform.position != home)
-        {
-            rb.gravityScale = 4;
-        }
-        else
-        {
-            rb.gravityScale = 0;
+            else if (state == "")
+            {
+                rb.gravityScale = 4;
+            }
+            else if (state != "")
+            {
+                rb.gravityScale = 0;
+            }
         }
 
         // Walk home
@@ -143,7 +179,7 @@ public class Battler : MonoBehaviour
         }
 
         // Walk up to enemy
-        if (state == "Knife" || state == "Spoon")
+        if (state == "Knife" || state == "Spoon" || state == "Fork")
         {
             if (phase == 0)
             {
@@ -169,6 +205,11 @@ public class Battler : MonoBehaviour
                 {
                     spoonObject.SetActive(true);
                     StartCoroutine(SpoonDamage());
+                }
+                else if (state == "Fork")
+                {
+                    forkObject.SetActive(true);
+                    StartCoroutine(ForkCapture());
                 }
                 phase = 2;
             }
@@ -305,6 +346,11 @@ public class Battler : MonoBehaviour
             target.damageText.text = damage.ToString();
         }
 
+        if (target.ingredient.name == "Corn")
+        {
+            target.HaveChild();
+        }
+
         target.currentHealth -= damage;
         StartCoroutine(WalkHome());
     }
@@ -330,7 +376,37 @@ public class Battler : MonoBehaviour
             target.damageText.text = damage.ToString();
         }
 
+        if (target.ingredient.name == "Corn")
+        {
+            target.HaveChild();
+        }
+
         target.currentHealth -= damage;
+        StartCoroutine(WalkHome());
+    }
+
+    public void HaveChild()
+    {
+        Battler newEnemy = Instantiate(battleManager.enemyPrefab);
+        newEnemy.CreateEnemyStats(ingredient.children[0], level);
+        battleManager.turnOrder.Add(newEnemy);
+        battleManager.enemies.Add(newEnemy);
+        newEnemy.walkHome = true;
+    }
+
+    IEnumerator ForkCapture()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        // Capture enemy if theyre weak enough
+        if (target.currentHealth <= target.health / 4)
+        {
+            target.captured = true;
+            target.rb.gravityScale = 3;
+            target.rb.velocity = new Vector2(-200 * Time.deltaTime, 550 * Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(0.125f);
         StartCoroutine(WalkHome());
     }
 
@@ -342,7 +418,8 @@ public class Battler : MonoBehaviour
 
     public void ForkAttack()
     {
-
+        state = "Fork";
+        phase = 0;
     }
 
     // Enemy Attacks
@@ -407,9 +484,17 @@ public class Battler : MonoBehaviour
             }
             gameManager.playerFill -= damage;
 
-            rb.gravityScale = 0;
-            rb.velocity = new Vector2(0, 300) * Time.deltaTime;
+            //rb.gravityScale = 4;
+            //rb.velocity = new Vector2(0, 300) * Time.deltaTime;
             StartCoroutine(WalkHome());
+        }
+
+        // Destroy captured enemy
+        if (name == "PlayerBattle" && enemyTrigger.captured)
+        {
+            playerIngredients.inventory.Add(enemyTrigger.ingredient);
+            battleManager.turnOrder.Remove(enemyTrigger);
+            Destroy(enemyTrigger.gameObject);
         }
     }
 

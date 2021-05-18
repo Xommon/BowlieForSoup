@@ -29,17 +29,17 @@ public class LanguageManager : MonoBehaviour
 
         test = new string[]
         {
-            "Your first recipe is a tomato soup. It shoud be pretty easy tae make. Ye'll neit 4 tomato cubes, 1 onion cube, an 1 garlic cube. Ye can find aw o these ingredients i the grassland area. Make sure ye fill up on broth before ye get gang!",
-            "Looks like ye've been makin some soup. Smells guid! dae ye want tae submit whit ye have? |",
-            "Well, let's get a move on! ye've got more soups tae make! ",
-            "You did soup-er well for yer first time! A'm very impressed! ",
-            "Not bad for yer first time. Guid work!",
-            "There wis much tae be desirit from the soup ye made. Try again! ",
-            "The neist soup tae make is the creamy carrot soup. Ye'll neit carrots, onion, an garlic for this recipe. Let's see whit ye can dae! ",
-            "How's thon creamy carrot soup comin along? are ye ready tae turn i whit ye have? | ",
-            "This soup is perfect! great job! ",
-            "Good job! the soup turnit oot nice. ",
-            "Unfortunately, ye didnae get this soup up tae expectit standards. Try makin it again. ",
+            ".ﻯﺮﺧﺃ ﺓﺮﻣ ﻩﺩﺍﺪﻋﺇ ﻝﻭﺎﺣ .ﺔﻌﻗﻮﺘﻤﻟﺍ ﺮﻴﻳﺎﻌﻤﻠﻟ ﺍًﻘﻓﻭ ﺀﺎﺴﺤﻟﺍ ﺍﺬﻫ ﻰﻠﻋ ﻞﺼﺤﺗ ﻢﻟﻆﺤﻟﺍ ﺀﻮﺴﻟ",
+            ".ﻒﻴﻄﻟ ﺀﺎﺴﺤﻟﺍ ﻥﺃ ﻦﻴﺒﺗ !ﺪﻴﺟ ﻞﻤﻋ",
+            "!ﻊﺋﺍﺭ ﻞﻤﻋ !ﻲﻟﺎﺜﻣ ﺀﺎﺴﺤﻟﺍ ﺍﺬﻫ",
+            "| ؟ﻚﻳﺪﻟ ﺎﻣ ﻢﻳﺪﻘﺘﻟ ﺪﻌﺘﺴﻣ ﺖﻧﺃ ﻞﻫ ؟ﺍﺬﻫ ﻲﻤﻳﺮﻜﻟﺍ ﺭﺰﺠﻟﺍ ﺀﺎﺴﺣ ﻝﺎﺣ ﻒﻴﻛ",
+            "!ﻪﻠﻌﻓ ﻚﻨﻜﻤﻳ ﺎﻣ ﻯﺮﻨﻟ .ﺔﻔﺻﻮﻟﺍ ﻩﺬﻬﻟ ﻡﻮﺜﻟﺍﻭ ﻞﺼﺒﻟﺍﻭ ﺭﺰﺠﻟﺍ ﻰﻟﺇ ﺝﺎﺘﺤﺘﺳ .ﻲﻤﻳﺮﻜﻟﺍ ﺭﺰﺠﻟﺍ ﺀﺎﺴﺣ ﻮﻫ ﻩﺮﻴﻀﺤﺗ ﺐﺠﻳ ﻱﺬﻟﺍ ﻲﻟﺎﺘﻟﺍ ﺀﺎﺴﺤﻟﺍ",
+            "!ﻯﺮﺧﺃ ﺓﺮﻣ ﻝﻭﺎﺣ .ﻪﺘﻌﻨﺻ ﻱﺬﻟﺍ ﺀﺎﺴﺤﻟﺍ ﻦﻣ ﻪﻴﻓ ﺏﻮﻏﺮﻣ ﻮﻫ ﺎﻤﻣ ﺮﻴﺜﻜﻟﺍ ﻙﺎﻨﻫ ﻥﺎﻛ",
+            "!ﺪﻴﺟ ﻞﻤﻋ .ﻚﻟ ﺓﺮﻣ ﻝﻭﻷ ﺍًﺌﻴﺳ ﺲﻴﻟ",
+            "!ﺍًﺪﺟ ﺐﺠﻌﻣ ﺎﻧﺃ !ﺓﺮﻣ ﻝﻭﻷ ﺍًﺪﻴﺟ ﺀﺎﺴﺤﻟﺍ ﺖﻳﺩﺃ ﺪﻘﻟ",
+            "!ﻩﺮﻴﻀﺤﺘﻟ ﺀﺎﺴﺤﻟﺍ ﻦﻣ ﺪﻳﺰﻤﻟﺍ ﻚﻳﺪﻟ !ﻙﺮﺤﺘﻧ ﺎﻨﻋﺩﺍًﻨﺴﺣ",
+            "| ؟ﻚﻳﺪﻟ ﺎﻣ ﻝﺎﺳﺭﺇ ﺪﻳﺮﺗ ﻞﻫ !ﺔﺒﻴﻃ ﻪﺘﺤﺋﺍﺭ .ﺀﺎﺴﺤﻟﺍ ﺾﻌﺑ ﻊﻨﺼﺗ ﺖﻨﻛ ﻚﻧﺃ ﻭﺪﺒﻳ",
+            " !ﺃﺪﺒﺗ ﻥﺃ ﻞﺒﻗ ﻕﺮﻤﻟﺍ ﻕﻮﻓ ﺀﻞﻣ ﻦﻣ ﺪﻛﺄﺗ .ﺔﻴﺒﺸﻌﻟﺍ ﻲﺿﺍﺭﻷﺍ ﺔﻘﻄﻨﻣ ﻲﻓ ﺕﺎﻧﻮﻜﻤﻟﺍ ﻩﺬﻫ ﻞﻛ ﻰﻠﻋ ﺭﻮﺜﻌﻟﺍ ﻚﻨﻜﻤﻳ .ﺪﺣﺍﻭ ﻡﻮﺛ ﺐﻌﻜﻣﻭﺪﺣﺍﻭ ﻞﺼﺑ ﺐﻌﻜﻣﻭ ﻢﻃﺎﻤﻃ ﺕﺎﺒﻌﻜﻣ 4 ﻰﻟﺇ ﺝﺎﺘﺤﺘﺳ .ﺮﻴﻀﺤﺘﻟﺍ ﺔﻠﻬﺳ ﻥﻮﻜﺗ ﻥﺃ ﺐﺠﻳ .ﻢﻃﺎﻤﻄﻟﺍ ﺀﺎﺴﺣ ﻲﻫ ﻰﻟﻭﻷﺍ ﻚﺘﻔﺻﻭ",
         };
 
         allLanguages.Add(english);

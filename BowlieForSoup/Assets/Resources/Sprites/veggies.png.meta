@@ -314,6 +314,9 @@ TextureImporter:
   - first:
       213: 4888557347159485821
     second: veggies_51
+  - first:
+      213: 4887320161177603567
+    second: veggies_52
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1524,6 +1527,27 @@ TextureImporter:
       bones: []
       spriteID: d7d219da105a7d340800000000000000
       internalID: 4888557347159485821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: veggies_52
+      rect:
+        serializedVersion: 2
+        x: 1269
+        y: 200
+        width: 55
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fed889edacf33d340800000000000000
+      internalID: 4887320161177603567
       vertices: []
       indices: 
       edges: []

@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class PlayerIngredients : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<Ingredient> inventory = new List<Ingredient>();
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(this);
     }
 }
