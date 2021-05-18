@@ -143,7 +143,7 @@ public class Battler : MonoBehaviour
         }
 
         // Walk up to enemy
-        if (state == "Knife")
+        if (state == "Knife" || state == "Spoon")
         {
             if (phase == 0)
             {
@@ -160,8 +160,16 @@ public class Battler : MonoBehaviour
             }
             else if (phase == 1)
             {
-                knifeObject.SetActive(true);
-                StartCoroutine(KnifeDamage());
+                if (state == "Knife")
+                {
+                    knifeObject.SetActive(true);
+                    StartCoroutine(KnifeDamage());
+                }
+                else if (state == "Spoon")
+                {
+                    spoonObject.SetActive(true);
+                    StartCoroutine(SpoonDamage());
+                }
                 phase = 2;
             }
             else if (phase == 2 && transform.position == home)
@@ -233,14 +241,17 @@ public class Battler : MonoBehaviour
         // Die if health is depleted
         if (name != "PlayerBattle" && currentHealth <= 0 && health > 0)
         {
-            // Create children
-            foreach(Ingredient childIngredient in ingredient.children)
+            // Create children if cut up
+            if (battleManager.battleHUD.weaponIndex == 0)
             {
-                Battler newEnemy = Instantiate(battleManager.enemyPrefab);
-                newEnemy.CreateEnemyStats(childIngredient, level);
-                battleManager.turnOrder.Add(newEnemy);
-                battleManager.enemies.Add(newEnemy);
-                newEnemy.walkHome = true;
+                foreach (Ingredient childIngredient in ingredient.children)
+                {
+                    Battler newEnemy = Instantiate(battleManager.enemyPrefab);
+                    newEnemy.CreateEnemyStats(childIngredient, level);
+                    battleManager.turnOrder.Add(newEnemy);
+                    battleManager.enemies.Add(newEnemy);
+                    newEnemy.walkHome = true;
+                }
             }
 
             battleManager.turnOrder.Remove(this);
@@ -253,7 +264,7 @@ public class Battler : MonoBehaviour
         sr.sprite = ingredient.sprite;
         this.level = level;
         this.ingredient = ingredient;
-        health = 5 + (int)(level * ingredient.health * 1.5f);
+        health = 5 + (int)((level + ingredient.health) * 1.5f);
         attack = (int)(level * ingredient.attack);
         defence = (int)(level * ingredient.defence);
         speed = (int)(level * ingredient.speed);
@@ -278,7 +289,32 @@ public class Battler : MonoBehaviour
         yield return new WaitForSeconds(0.25f);
 
         // Do damage to enemy
-        int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 1.0f, target.currentAttack * 1.5f) - (target.currentDefence / 2);
+        int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 1.0f, battleManager.playerBattle.currentAttack * 1.35f) - (target.currentDefence / 2);
+        target.damageBubble.SetActive(true);
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        if (Random.Range(0, 101) < battleManager.playerBattle.currentLuck)
+        {
+            damage *= 2;
+            target.damageText.text = "Critical Hit!\n" + damage.ToString();
+        }
+        else
+        {
+            target.damageText.text = damage.ToString();
+        }
+
+        target.currentHealth -= damage;
+        StartCoroutine(WalkHome());
+    }
+
+    IEnumerator SpoonDamage()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        // Do damage to enemy
+        int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 0.9f, battleManager.playerBattle.currentAttack * 1.1f) - (target.currentDefence / 2);
         target.damageBubble.SetActive(true);
         if (damage < 0)
         {
@@ -300,7 +336,8 @@ public class Battler : MonoBehaviour
 
     public void SpoonAttack()
     {
-
+        state = "Spoon";
+        phase = 0;
     }
 
     public void ForkAttack()
@@ -387,7 +424,7 @@ public class Battler : MonoBehaviour
             forkObject.SetActive(false);
         }
 
-        if (battleManager.turn = this)
+        if (battleManager.turn == this)
         {
             walkHome = true;
         }

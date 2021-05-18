@@ -218,6 +218,7 @@ public class BattleManager : MonoBehaviour
         foreach (Battler battler in turnOrder)
         {
             battler.damageBubble.SetActive(false);
+            battler.damaged = false;
         }
 
         if (turnOrder.Count == 1)

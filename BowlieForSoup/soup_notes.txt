@@ -2,11 +2,7 @@ PROBLEMS:
 - liquid slows down game
 - liquid goes through bowl
 - camera off-centre after battle
-- enemy sometimes double attacks
-
-playerShadow.transform.position
-rb.gravityScale
-rb.velocity
+- enemy sometimes double attacks when player is damaged in the last turn
 
 Bowlie For Soup (Get the Legal Rights)
 /balance liquid
@@ -19,7 +15,7 @@ Bowlie For Soup (Get the Legal Rights)
 6 ingredients with combo turn/live based combat
 /player can jump to avoid attack or block
 /knife attack - extra damage, cuts enemies, some recoil spillage
-spoon attack - medium damage, cannot cut enemies
+/spoon attack - medium damage, cannot cut enemies
 fork attack - capture a weak enemy
 flee - you exit the battle
 

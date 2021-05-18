@@ -116,21 +116,63 @@ public class BattleHUD : MonoBehaviour
             else if (battleManager.turn.name == "PlayerBattle" && weaponMenu.activeInHierarchy && battleManager.turn.target != null)
             {
                 // Choose target
-                if (Input.GetAxisRaw("Horizontal") == 1) // Right
+                if (Input.GetAxisRaw("Horizontal") == 1 && reset) // Right
                 {
-
+                    reset = false;
+                    RaycastHit2D hit = Physics2D.Raycast(battleManager.turn.target.transform.position, transform.right, 10.0f);
+                    Debug.DrawRay(battleManager.turn.target.transform.position, transform.right, Color.red, 10.0f);
+                    Debug.Log(hit.transform.position);
+                    Debug.Log("Right");
+                    if (hit.collider.GetComponent<Battler>() != null)
+                    {
+                        if (hit.collider.name != "PlayerBattle")
+                        {
+                            battleManager.turn.target = hit.collider.GetComponent<Battler>();
+                        }
+                    }
                 }
-                else if (Input.GetAxisRaw("Horizontal") == -1) // Left
+                else if (Input.GetAxisRaw("Horizontal") == -1 && reset) // Left
                 {
-
+                    reset = false;
+                    RaycastHit2D hit = Physics2D.Raycast(battleManager.turn.target.transform.position, -transform.right, 10.0f);
+                    Debug.DrawRay(battleManager.turn.target.transform.position, -transform.right);
+                    if (hit.collider.GetComponent<Battler>() != null)
+                    {
+                        if (hit.collider.name != "PlayerBattle")
+                        {
+                            battleManager.turn.target = hit.collider.GetComponent<Battler>();
+                        }
+                    }
                 }
-                else if (Input.GetAxisRaw("Vertical") == -1) // Down
+                else if (Input.GetAxisRaw("Vertical") == -1 && reset) // Down
                 {
-
+                    reset = false;
+                    RaycastHit2D hit = Physics2D.Raycast(battleManager.turn.target.transform.position, transform.up, 10.0f);
+                    Debug.DrawRay(battleManager.turn.target.transform.position, transform.up);
+                    if (hit.collider.GetComponent<Battler>() != null)
+                    {
+                        if (hit.collider.name != "PlayerBattle")
+                        {
+                            battleManager.turn.target = hit.collider.GetComponent<Battler>();
+                        }
+                    }
                 }
-                else if (Input.GetAxisRaw("Vertical") == 1) // Up
+                else if (Input.GetAxisRaw("Vertical") == 1 && reset) // Up
                 {
-
+                    reset = false;
+                    RaycastHit2D hit = Physics2D.Raycast(battleManager.turn.target.transform.position, -transform.up, 10.0f);
+                    Debug.DrawRay(battleManager.turn.target.transform.position, -transform.up);
+                    if (hit.collider.GetComponent<Battler>() != null)
+                    {
+                        if (hit.collider.name != "PlayerBattle")
+                        {
+                            battleManager.turn.target = hit.collider.GetComponent<Battler>();
+                        }
+                    }
+                }
+                else if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    reset = true;
                 }
 
                 if (Input.GetButtonDown("Fire1"))
@@ -208,7 +250,6 @@ public class BattleHUD : MonoBehaviour
         {
             if (selection == attackButton)
             {
-                weaponIndex = 0;
                 weaponMenu.SetActive(true);
                 weaponMenuArrow.gameObject.SetActive(true);
             }
@@ -217,6 +258,7 @@ public class BattleHUD : MonoBehaviour
 
         if (Input.GetButtonDown("Fire2"))
         {
+            weaponIndex = 0;
             if (weaponMenu.activeInHierarchy)
             {
                 weaponMenu.SetActive(false);
