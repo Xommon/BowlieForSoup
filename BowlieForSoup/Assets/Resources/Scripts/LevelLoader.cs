@@ -37,14 +37,15 @@ public class LevelLoader : MonoBehaviour
         else
         {
             // Destroy enemy in overworld
+            StartCoroutine(UnfreezeOverworld());
+            transition.gameObject.SetActive(true);
+            transition.Play("blocktransition_end");
+
             if (SceneManager.GetActiveScene().buildIndex == 1 && battleManager.battleInstanceFromOverworld != "")
             {
                 Destroy(GameObject.Find(battleManager.battleInstanceFromOverworld));
                 battleManager.battleInstanceFromOverworld = "";
             }
-            StartCoroutine(UnfreezeOverworld());
-            transition.gameObject.SetActive(true);
-            transition.Play("blocktransition_end");
         }
     }
 

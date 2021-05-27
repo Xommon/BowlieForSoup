@@ -16,6 +16,8 @@ public class BattleManager : MonoBehaviour
     public BattleHUD battleHUD;
     public LevelLoader levelLoader;
     public Battler enemyPrefab;
+    public GameObject damagePrefab;
+    public GameObject battleCamera;
 
     // Enemy battle stats
     public Ingredient enemyIngredient;
@@ -215,7 +217,6 @@ public class BattleManager : MonoBehaviour
         // Disable damage bubbles
         foreach (Battler battler in turnOrder)
         {
-            battler.damageBubble.SetActive(false);
             battler.damaged = false;
             battler.rb.gravityScale = 0;
             battler.transform.position = battler.home;
@@ -255,5 +256,17 @@ public class BattleManager : MonoBehaviour
         enemies.Clear();
         turnOrder.Clear();
         levelLoader.LoadLevel(1);
+    }
+
+    public IEnumerator ShakeScreen(float time, float intensity)
+    {
+        Vector3 startingPosition = battleCamera.transform.position;
+        for (int i = 0; i < (int)(Time.deltaTime * time); i++)
+        {
+            battleCamera.transform.position = new Vector3(Random.Range(0, intensity), Random.Range(0, intensity), startingPosition.z);
+            yield return new WaitForSeconds(intensity / 10);
+            battleCamera.transform.position = startingPosition;
+            yield return new WaitForSeconds(intensity / 10);
+        }
     }
 }

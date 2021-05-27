@@ -42,8 +42,8 @@ public class Battler : MonoBehaviour
     public int phase;
     private Battler enemyTrigger;
     public bool walkHome;
-    public GameObject damageBubble;
-    public TextMesh damageText;
+    //public GameObject damageBubble;
+    //public TextMesh damageText;
     public GameManager gameManager;
     public bool damaged;
     public GameObject targetArrow;
@@ -55,6 +55,7 @@ public class Battler : MonoBehaviour
     public bool moreRed;
     public bool captured;
     public PlayerIngredients playerIngredients;
+    public bool fleeing;
 
     // ATTACKS
     // Roll
@@ -64,11 +65,13 @@ public class Battler : MonoBehaviour
     private void Start()
     {
         // References
+        fleeing = false;
         sr = GetComponent<SpriteRenderer>();
         battleManager = FindObjectOfType<BattleManager>();
         rb = GetComponent<Rigidbody2D>();
         gameManager = FindObjectOfType<GameManager>();
         playerIngredients = FindObjectOfType<PlayerIngredients>();
+        battleManager.battleCamera = GameObject.Find("Battle Camera");
 
         // Create the player's stats
         if (gameObject.name == "PlayerBattle")
@@ -102,7 +105,14 @@ public class Battler : MonoBehaviour
         // Shadow follows
         if (name == "PlayerBattle")
         {
-            playerShadow.transform.position = new Vector3(transform.position.x, playerShadow.transform.position.y, playerShadow.transform.position.z);
+            if (battleManager.turn == battleManager.playerBattle)
+            {
+                playerShadow.transform.position = new Vector3(-5, -0.5f, 0);
+            }
+            else
+            {
+                playerShadow.transform.position = new Vector3(transform.position.x, playerShadow.transform.position.y, playerShadow.transform.position.z);
+            }
         }
 
         // Captured enemies spin slightly
@@ -165,7 +175,7 @@ public class Battler : MonoBehaviour
         // Walk home
         if (walkHome && transform.position != home)
         {
-            transform.position = Vector2.MoveTowards(transform.position, home, 6.0f * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, home, 9.0f * Time.deltaTime);
         }
 
         // Indicate target
@@ -186,7 +196,7 @@ public class Battler : MonoBehaviour
                 if (transform.position != target.transform.position - new Vector3(2, 0, 0))
                 {
                     // Get into position to attack
-                    transform.position = Vector2.MoveTowards(transform.position, target.transform.position - new Vector3(2, 0, 0), 6.0f * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, target.transform.position - new Vector3(2, 0, 0), 9.0f * Time.deltaTime);
                 }
                 else
                 {
@@ -215,6 +225,7 @@ public class Battler : MonoBehaviour
             }
             else if (phase == 2 && transform.position == home)
             {
+                battleManager.playerBattle.target = null;
                 state = "";
                 walkHome = false;
                 battleManager.EndTurn();
@@ -229,19 +240,19 @@ public class Battler : MonoBehaviour
                 if (transform.position != new Vector3(-1, 0, 0))
                 {
                     // Get into position to attack
-                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 4.0f * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 9.0f * Time.deltaTime);
                 }
                 else
                 {
                     // Position ready
                     phase = 1;
-                    momentum = 1.0f;
+                    momentum = 2.0f;
                 }
             }
             else if (phase == 1)
             {
                 // Start rotating
-                momentum *= 1.02f;
+                momentum *= 1.04f;
                 transform.Rotate(0, 0, momentum);
             }
             else if (phase == 2)
@@ -276,6 +287,19 @@ public class Battler : MonoBehaviour
                     momentum = 0;
                     battleManager.EndTurn();
                 }
+            }
+        }
+
+        // Run away
+        if (fleeing)
+        {
+            if (name == "PlayerBattle")
+            {
+                transform.position += new Vector3(-0.1f, 0, 0);
+            }
+            else
+            {
+                transform.position += new Vector3(1, 0, 0);
             }
         }
 
@@ -331,7 +355,8 @@ public class Battler : MonoBehaviour
 
         // Do damage to enemy
         int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 1.0f, battleManager.playerBattle.currentAttack * 1.35f) - (target.currentDefence / 2);
-        target.damageBubble.SetActive(true);
+        GameObject newDamage = Instantiate(battleManager.damagePrefab, target.transform.position, Quaternion.identity, null);
+        TextMesh newDamageText = newDamage.GetComponentInChildren<TextMesh>();
         if (damage < 0)
         {
             damage = 0;
@@ -339,11 +364,11 @@ public class Battler : MonoBehaviour
         if (Random.Range(0, 101) < battleManager.playerBattle.currentLuck)
         {
             damage *= 2;
-            target.damageText.text = "Critical Hit!\n" + damage.ToString();
+            newDamageText.text = "Critical Hit!\n" + damage.ToString();
         }
         else
         {
-            target.damageText.text = damage.ToString();
+            newDamageText.text = damage.ToString();
         }
 
         if (target.ingredient.name == "Corn")
@@ -361,7 +386,8 @@ public class Battler : MonoBehaviour
 
         // Do damage to enemy
         int damage = (int)Random.Range(battleManager.playerBattle.currentAttack * 0.9f, battleManager.playerBattle.currentAttack * 1.1f) - (target.currentDefence / 2);
-        target.damageBubble.SetActive(true);
+        GameObject newDamage = Instantiate(battleManager.damagePrefab, target.transform.position, Quaternion.identity, null);
+        TextMesh newDamageText = newDamage.GetComponentInChildren<TextMesh>();
         if (damage < 0)
         {
             damage = 0;
@@ -369,11 +395,11 @@ public class Battler : MonoBehaviour
         if (Random.Range(0, 101) < battleManager.playerBattle.currentLuck)
         {
             damage *= 2;
-            target.damageText.text = "Critical Hit!\n" + damage.ToString();
+            newDamageText.text = "Critical Hit!\n" + damage.ToString();
         }
         else
         {
-            target.damageText.text = damage.ToString();
+            newDamageText.text = damage.ToString();
         }
 
         if (target.ingredient.name == "Corn")
@@ -428,7 +454,7 @@ public class Battler : MonoBehaviour
         phase = 0; // Get into position
         state = "Roll";
 
-        float launchTime = Random.Range(3.5f, 4.5f);
+        float launchTime = Random.Range(1.5f, 2.5f);
         if (level < 10)
         {
             launchSpeed = Random.Range(0.1f, 0.1f);
@@ -459,42 +485,50 @@ public class Battler : MonoBehaviour
         }
 
         // Player hit by attack
-        if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll" && !damaged)
+        if (enemyTrigger != null)
         {
-            // Do damage to player
-            damaged = true;
-            int damage = (int)Random.Range(enemyTrigger.currentAttack * 0.8f, enemyTrigger.currentAttack * 1.2f) - (currentDefence / 2);
-            damageBubble.SetActive(true);
-            if (Random.Range(0, 101) < enemyTrigger.currentLuck)
+            if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll" && !damaged)
             {
-                damage *= 2;
-                damageText.text = "Critical Hit!\n" + damage.ToString();
-            }
-            else
-            {
-                damageText.text = damage.ToString();
-            }
-            if (damage < 0)
-            {
-                damage = 0;
-            }
-            else if (damage > 100)
-            {
-                damage = 100;
-            }
-            gameManager.playerFill -= damage;
+                // Do damage to player
+                battleManager.ShakeScreen(2.0f, 1.5f);
+                damaged = true;
+                int damage = (int)Random.Range(enemyTrigger.currentAttack * 0.8f, enemyTrigger.currentAttack * 1.2f) - (currentDefence / 2);
+                GameObject newDamage = Instantiate(battleManager.damagePrefab, battleManager.playerBattle.transform.position, Quaternion.identity, null);
+                TextMesh newDamageText = newDamage.GetComponentInChildren<TextMesh>();
+                if (Random.Range(0, 101) < enemyTrigger.currentLuck)
+                {
+                    damage *= 2;
+                    newDamageText.text = "Critical Hit!\n" + damage.ToString();
+                }
+                else
+                {
+                    newDamageText.text = damage.ToString();
+                }
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                else if (damage > 100)
+                {
+                    damage = 100;
+                }
+                gameManager.playerFill -= damage;
 
-            //rb.gravityScale = 4;
-            //rb.velocity = new Vector2(0, 300) * Time.deltaTime;
-            StartCoroutine(WalkHome());
+                //rb.gravityScale = 4;
+                //rb.velocity = new Vector2(0, 300) * Time.deltaTime;
+                StartCoroutine(WalkHome());
+            }
         }
 
         // Destroy captured enemy
-        if (name == "PlayerBattle" && enemyTrigger.captured)
+        if (name == "PlayerBattle" && enemyTrigger != null)
         {
-            playerIngredients.inventory.Add(enemyTrigger.ingredient);
-            battleManager.turnOrder.Remove(enemyTrigger);
-            Destroy(enemyTrigger.gameObject);
+            if (enemyTrigger.captured)
+            {
+                playerIngredients.inventory.Add(enemyTrigger.ingredient);
+                battleManager.turnOrder.Remove(enemyTrigger);
+                Destroy(enemyTrigger.gameObject);
+            }
         }
     }
 

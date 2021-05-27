@@ -93,7 +93,7 @@ public class BattleHUD : MonoBehaviour
             {
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    // Once the player chooses and attack, move to chosing a target
+                    // Once the player chooses an attack, move to chosing a target
                     float shortestDistance = 10000;
                     foreach (Battler enemy in battleManager.turnOrder)
                     {
@@ -110,6 +110,8 @@ public class BattleHUD : MonoBehaviour
                 }
                 else if (Input.GetButtonDown("Fire2"))
                 {
+                    // Go back to select an option
+                    weaponMenuArrow.gameObject.SetActive(false);
                     weaponMenu.SetActive(false);
                 }
             }
@@ -253,7 +255,12 @@ public class BattleHUD : MonoBehaviour
                 weaponMenu.SetActive(true);
                 weaponMenuArrow.gameObject.SetActive(true);
             }
-
+            else if (selection == fleeButton)
+            {
+                battleManager.playerBattle.fleeing = true;
+                gameObject.SetActive(false);
+                battleManager.BattleEnd();
+            }
         }
 
         if (Input.GetButtonDown("Fire2"))

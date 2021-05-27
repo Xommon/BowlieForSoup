@@ -164,13 +164,15 @@ MonoBehaviour:
   levelLoader: {fileID: 0}
   enemyPrefab: {fileID: 6330092148834341071, guid: 3f63d02422741c1448326e0a3a0337a3,
     type: 3}
+  damagePrefab: {fileID: 3275619346537928460, guid: 6214b38d6ba01ec45b6c88e6bdb1697f,
+    type: 3}
   enemyIngredient: {fileID: 0}
   enemyLevel: 0
   level: 7
   attack: 8
   defence: 4
   speed: 4
-  luck: 15
+  luck: 6
   exp: 0
 --- !u!4 &7801260
 Transform:
@@ -1034,7 +1036,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 379833919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9839c2d141529145a431aef4d757ff3, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1047,9 +1049,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 154be9bb340d5da4d9c83a17d7ef5161, type: 2}
-  m_sharedMaterial: {fileID: -7995843348502966029, guid: 154be9bb340d5da4d9c83a17d7ef5161,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1073,8 +1074,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1083,9 +1084,9 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 0.84
+  m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: -10
+  m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1115,11 +1116,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-  preserveNumbers: 0
-  farsi: 1
-  originalText: 
-  fixTags: 1
-  forceFix: 0
 --- !u!222 &379833922
 CanvasRenderer:
   m_ObjectHideFlags: 0

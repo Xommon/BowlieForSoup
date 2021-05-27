@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43b18f20d420c64899c138c49893a0d, type: 3}
+  m_Name: Garlic
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 5027325888930907633, guid: f9d3454cc4588764784bd0dc027c8d14, type: 3}
+  children:
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  - {fileID: 11400000, guid: 035063a281df79d48959fe4b343030ff, type: 2}
+  health: 1
+  attack: 1
+  defence: 1
+  speed: 1
+  luck: 4

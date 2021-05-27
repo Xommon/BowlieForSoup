@@ -16,7 +16,7 @@ Bowlie For Soup (Get the Legal Rights)
 /player can jump to avoid attack or block
 /knife attack - extra damage, cuts enemies, some recoil spillage
 /spoon attack - medium damage, cannot cut enemies
-fork attack - capture a weak enemy
+/fork attack - capture a weak enemy
 flee - you exit the battle
 
 carrot
