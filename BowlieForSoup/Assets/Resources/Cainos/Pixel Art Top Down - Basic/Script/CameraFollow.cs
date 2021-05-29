@@ -17,11 +17,11 @@ namespace Cainos.PixelArtTopDown_Basic
 
         private void Start()
         {
-            if (target == null) return;
             gameManager = FindObjectOfType<GameManager>();
+            if (target == null) return;
 
+            transform.position = new Vector3(gameManager.savedPlayerPosition.x, gameManager.savedPlayerPosition.y, -10);
             offset = transform.position - target.position;
-            //transform.position = new Vector3(gameManager.savedPlayerPosition.x, gameManager.savedPlayerPosition.y, -10);
         }
 
         private void Update()

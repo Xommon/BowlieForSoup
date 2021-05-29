@@ -152,7 +152,7 @@ public class Battler : MonoBehaviour
                 {
                     // Jump
                     rb.velocity = new Vector2(0, 800) * Time.deltaTime;
-                    rb.gravityScale = 4;
+                    rb.gravityScale = 5;
                 }
             }
 
@@ -175,7 +175,7 @@ public class Battler : MonoBehaviour
         // Walk home
         if (walkHome && transform.position != home)
         {
-            transform.position = Vector2.MoveTowards(transform.position, home, 9.0f * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, home, 6.0f * Time.deltaTime);
         }
 
         // Indicate target
@@ -196,7 +196,7 @@ public class Battler : MonoBehaviour
                 if (transform.position != target.transform.position - new Vector3(2, 0, 0))
                 {
                     // Get into position to attack
-                    transform.position = Vector2.MoveTowards(transform.position, target.transform.position - new Vector3(2, 0, 0), 9.0f * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, target.transform.position - new Vector3(2, 0, 0), 6.0f * Time.deltaTime);
                 }
                 else
                 {
@@ -240,7 +240,7 @@ public class Battler : MonoBehaviour
                 if (transform.position != new Vector3(-1, 0, 0))
                 {
                     // Get into position to attack
-                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 9.0f * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 6.0f * Time.deltaTime);
                 }
                 else
                 {
@@ -285,6 +285,70 @@ public class Battler : MonoBehaviour
                     state = "";
                     walkHome = false;
                     momentum = 0;
+                    battleManager.EndTurn();
+                }
+            }
+        }
+        else if (state == "Tackle")
+        {
+            // Stop falling
+            if (phase > 0 && transform.position.y < 0)
+            {
+                //rb.gravityScale = 0;
+                transform.position = new Vector3(transform.position.x, 0, 0);
+            }
+
+            if (phase == 0)
+            {
+                if (transform.position != new Vector3(-1, 0, 0))
+                {
+                    // Get into position to attack
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector3(-1, 0, 0), 6.0f * Time.deltaTime);
+                }
+                else
+                {
+                    // Position ready
+                    phase = 1;
+                }
+            }
+            else if (phase == 1)
+            {
+                if (Random.Range(0, 3) == 0 && transform.position.x > battleManager.playerBattle.transform.position.x)
+                {
+                    StartCoroutine(Jump(0.285f, 800.0f));
+                }
+                phase = 2;
+            }
+            else if (phase == 2)
+            {
+                // Tackle player
+                if (transform.position.x > -10.5f)
+                {
+                    transform.position += new Vector3(-6.0f * Time.deltaTime, 0, 0);
+                }
+                else
+                {
+                    rb.gravityScale = 0;
+                    rb.velocity = Vector3.zero;
+                    transform.position = new Vector3(10.5f, home.y, 0);
+                    phase = 3; // Return home
+                }
+            }
+            else if (phase == 3)
+            {
+                if (transform.position.x > home.x)
+                {
+                    // Return home
+                    transform.Rotate(0, 0, momentum / 4);
+                    transform.position += new Vector3(-0.15f, 0, 0);
+                }
+                else
+                {
+                    // End attack
+                    transform.position = home;
+                    transform.rotation = Quaternion.identity;
+                    state = "";
+                    walkHome = false;
                     battleManager.EndTurn();
                 }
             }
@@ -448,6 +512,16 @@ public class Battler : MonoBehaviour
         phase = 0;
     }
 
+    IEnumerator Jump(float time, float force)
+    {
+        yield return new WaitForSeconds(time);
+        if (rb.velocity == Vector2.zero)
+        {
+            rb.velocity = new Vector2(0, force) * Time.deltaTime;
+            rb.gravityScale = 4f;
+        }
+    }
+
     // Enemy Attacks
     public IEnumerator Roll()
     {
@@ -487,7 +561,7 @@ public class Battler : MonoBehaviour
         // Player hit by attack
         if (enemyTrigger != null)
         {
-            if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && enemyTrigger.state == "Roll" && !damaged)
+            if (name == "PlayerBattle" && battleManager.turn == enemyTrigger && (enemyTrigger.state == "Roll" || enemyTrigger.state == "Tackle") && !damaged)
             {
                 // Do damage to player
                 battleManager.ShakeScreen(2.0f, 1.5f);

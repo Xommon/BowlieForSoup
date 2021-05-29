@@ -247,7 +247,14 @@ public class BattleManager : MonoBehaviour
         else
         {
             // Enemy's turn
-            StartCoroutine(turn.Roll());
+            if (Random.Range(0, 2) == 0)
+            {
+                StartCoroutine(turn.Roll());
+            }
+            else
+            {
+                turn.Tackle();
+            }
         }
     }
 
