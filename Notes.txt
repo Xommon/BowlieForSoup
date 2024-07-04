@@ -1,0 +1,78 @@
+--- BOWLIE FOR SOUP ---
+
+- Tomato Soup -
+Tomato
+
+- Carrot Soup -
+Carrot
+
+- Borscht -
+Beet
+Potato
+Carrot
+Onion
+
+- Corn Chowder -
+Corn
+Potato
+Onion
+
+- Three Sisters -
+Corn
+Squash
+Beans
+
+- Gazpacho -
+Tomato
+Zucchini
+Chili
+Garlic
+
+- French Onion -
+Onion
+Butter
+Cheese
+Bread
+
+- Broccoli Cheddar -
+Broccoli
+Cheddar
+Carrot
+
+- Baked Potato -
+Potato
+Cheddar
+Chives
+
+- Cream of Mushroom -
+Mushroom
+Onion
+Garlic
+Butter
+
+- Garden Veggie -
+Tomato
+Zucchini
+Celery
+Onion
+Carrot
+
+- Butternut Squash -
+Squash
+Onion
+Garlic
+Ginger
+
+- Tortilla Soup -
+Chili
+Tomato
+Onion
+Black Beans
+Bell Pepper
+Avocado
+Lime
+
+- Miso Soup -
+Tofu
+Seaweed
+Green Onion
