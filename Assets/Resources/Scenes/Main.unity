@@ -3541,6 +3541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a49ac54f13df3847bcbf2f91ce00488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   movementSpeed: 8
   damping: 0.9
   rb: {fileID: 998118299}
@@ -5108,7 +5109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1392030304
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5424,8 +5425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   language: 0
   text: {fileID: 1408486118}
-  messageToPush: What a feeling! I have wi-fi now! I need home internet from T-Mobile
-    to fulfill my life.
+  speechBubble: {fileID: 1392030303}
+  nextIcon: {fileID: 1624272747}
 --- !u!1 &1624272747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5443,7 +5444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1624272748
 RectTransform:
   m_ObjectHideFlags: 0

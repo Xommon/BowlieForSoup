@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -12,34 +10,81 @@ public class GameManager : MonoBehaviour
 
     // Dialogue
     public TextMeshProUGUI text;
-    private int messageIndex;
+    public GameObject speechBubble;
+    private int charIndex;
+    private int lineIndex;
     private string messageToPush;
+    public GameObject nextIcon;
+
+    private void Update()
+    {
+        if (Input.GetButtonDown("Submit") && nextIcon.activeInHierarchy)
+        {
+            if (messageToPush.Length > charIndex)
+            {
+                ContinueDialogue();
+            }
+            else
+            {
+                // End of chat
+                speechBubble.SetActive(false);
+            }
+        }
+    }
 
     [ContextMenu("TestDialogue")]
     public void StartDialogue()
     {
-        messageToPush = Dialogue.english[0];
-        messageIndex = 0;
+        lineIndex = 0;
+        messageToPush = Dialogue.english[lineIndex];
+        charIndex = 0;
         text.text = "";
+        speechBubble.SetActive(true);
+        nextIcon.SetActive(false);
+        StartCoroutine(PushLetter());
+    }
+
+    public void ContinueDialogue()
+    {
+        text.text = "";
+        nextIcon.SetActive(false);
         StartCoroutine(PushLetter());
     }
 
     IEnumerator PushLetter()
     {
-        text.text += messageToPush[messageIndex];
-
-        // Add pauses for punctuation
-        if (messageToPush[messageIndex] == '.' || messageToPush[messageIndex] == ',' || messageToPush[messageIndex] == '!' || messageToPush[messageIndex] == '?' || messageToPush[messageIndex] == ':' || messageToPush[messageIndex] == ';')
+        while (charIndex < messageToPush.Length)
         {
-            yield return new WaitForSeconds(0.25f);
-        }
-        yield return new WaitForSeconds(0.025f);
+            // Add the next letter to the text
+            text.text += messageToPush[charIndex];
 
-        messageIndex++;
+            // Add pauses for punctuation
+            if (char.IsPunctuation(messageToPush[charIndex]) && messageToPush[charIndex] != '\'' && messageToPush[charIndex] != '\"')
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.02f);
+            }
+            charIndex++;
 
-        if (messageToPush.Length > messageIndex)
-        {
-            StartCoroutine(PushLetter());
+            // Check if the text has overflowed to a new page
+            if (PageFull())
+            {
+                // Remove the last added letter and wait for the user to proceed
+                text.text = text.text.Remove(text.text.Length - 1);
+                charIndex--;
+                nextIcon.SetActive(true);
+                yield break; // Exit the coroutine and wait for user input
+            }
         }
+        // Show the next icon if all letters are displayed
+        nextIcon.SetActive(true);
+    }
+
+    public bool PageFull()
+    {
+        return !(text.pageToDisplay >= text.textInfo.pageCount);
     }
 }
