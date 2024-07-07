@@ -1,70 +1,70 @@
 --- BOWLIE FOR SOUP ---
 
-- Tomato Soup -
+1 - Tomato -
 Tomato
 
-- Carrot Soup -
+2 - Carrot -
 Carrot
 
-- Borscht -
+3 - Borscht -
 Beet
 Potato
 Carrot
 Onion
 
-- Corn Chowder -
+4 - Corn Chowder -
 Corn
 Potato
 Onion
 
-- Three Sisters -
+5 - Three Sisters -
 Corn
 Squash
 Beans
 
-- Gazpacho -
+6 - Gazpacho -
 Tomato
 Zucchini
 Chili
 Garlic
 
-- French Onion -
+7 - French Onion -
 Onion
 Butter
 Cheese
 Bread
 
-- Broccoli Cheddar -
+8 - Broccoli Cheddar -
 Broccoli
 Cheddar
 Carrot
 
-- Baked Potato -
+9 - Baked Potato -
 Potato
 Cheddar
 Chives
 
-- Cream of Mushroom -
+10 - Cream of Mushroom -
 Mushroom
 Onion
 Garlic
 Butter
 
-- Garden Veggie -
+11 - Garden Veggie -
 Tomato
 Zucchini
 Celery
 Onion
 Carrot
 
-- Butternut Squash -
+12 - Butternut Squash -
 Squash
 Onion
 Garlic
 Ginger
 
-- Tortilla Soup -
-Chili
+13 - Mexican Tortilla -
+Jalapenyo
 Tomato
 Onion
 Black Beans
@@ -72,7 +72,222 @@ Bell Pepper
 Avocado
 Lime
 
-- Miso Soup -
+14 - Miso -
 Tofu
 Seaweed
+Green Onion
+Ginger
+
+15 - Cuban Black Bean -
+Black Beans
+Onion
+Bell Pepper
+Garlic
+
+16 - Laksa -
+Tofu
+Chili
+Coconut
+Noodles
+Basil
+
+17 - Mulligatawny -
+Onion
+Potatoes
+Carrots
+Coconut
+Lemon
+
+18 - Doenjang-Jjigae -
+Potato
+Onion
+Zucchini
+Chili
+Tofu
+Green Onion
+Mushroom
+
+19 - Barszcz -
+Veggie Sausage
+Butter
+Leek
+Onion
+Garlic
+Egg
+
+20 - Goulash -
+Veggie Sausage
+Chili
+Potato
+Onion
+Butter
+Carrots
+
+21 - Italian Wedding -
+Mushroom
+Bread
+Onion
+Garlic
+Spinach
+
+22 - Egusi -
+Melon Seeds
+Bell Pepper
+Tomato
+Onion
+Chili
+Spinach
+
+23 - Peanut Soup - (Mali)
+Peanuts
+Garlic
+Ginger
+Potato
+
+24 - Palak Paneer -
+Spinach
+Cheese
+Chili
+Tomato
+Ginger
+
+25 - Bilo-Bilo -
+Rice
+Coconut
+Plantain
+Sweet Potato
+Purple Potato
+
+26 - Egg Drop -
+Egg
+Green Onion
+
+27 - Molokhiya -
+Jute
+Garlic
+Tomato
+
+28 - Potato and Leek -
+Potato
+Leek
+
+29 - Butternut Squash -
+Squash
+Ginger
+Garlic
+
+30 - Okroshka -
+Green Onion
+Potato
+Cucumber
+Egg
+
+31 - Kanuchi -
+Nuts
+Sweet Potato
+Corn
+
+32 - Sopa De Fubá -
+Corn
+Veggie Sausage
+Collard Greens
+Egg
+Green Onion
+
+33 - Locro -
+Corn
+Beans
+Chili
+Squash
+
+34 - Aush - (Afghanistan)
+Noodles
+Tomato
+Yoghurt
+Garlic
+Mint
+
+35 - Harira -
+Onion
+Chili
+Ginger
+Garlic
+Tomato
+Vermicelli
+
+36 - Gumbo -
+Butter
+Bell Pepper
+Celery
+Onion
+Okra
+Veggie Sausage
+Tomato
+Chili
+
+37 - Pho Chay -
+Tofu
+Noodles
+Lime
+Jalapeno
+Basil
+Mushroom
+Ginger
+
+38 - Thai Red Curry -
+Tofu
+Coconut
+Ginger
+Bell Pepper
+Chili
+Bamboo
+Lime
+
+39 - Tomato Bisque -
+Tomato
+Onion
+Garlic
+Basil
+
+40 - Chili
+Tomato
+Black Beans
+Avocado
+Lime
+Bell Pepper
+Celery
+Chili
+Onion
+
+41 - Roasted Red Bell Pepper
+Bell Pepper
+Onion
+Garlic
+
+42 - Matzo Ball Soup
+Garlic
+Onion
+Carrot
+Celery
+Egg
+Bread
+
+43 - Red Lentil Soup
+Lentils
+Squash
+Onion
+Chili
+
+44 - Šaltibarščiai (Lithuania/Chilled)
+Beets
+Cucumber
+Onion
+Egg
+Potato
+
+45 - Tom Ka
+Coconut
+Lime
+Chili
+Mushroom
 Green Onion

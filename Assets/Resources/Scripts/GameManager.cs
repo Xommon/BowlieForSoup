@@ -33,9 +33,9 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("TestDialogue")]
-    public void StartDialogue()
+    public void StartDialogue(int _lineIndex)
     {
-        lineIndex = 0;
+        lineIndex = _lineIndex;
         messageToPush = Dialogue.english[lineIndex];
         charIndex = 0;
         text.text = "";
@@ -46,9 +46,16 @@ public class GameManager : MonoBehaviour
 
     public void ContinueDialogue()
     {
-        text.text = "";
-        nextIcon.SetActive(false);
-        StartCoroutine(PushLetter());
+        if (messageToPush[charIndex] == '/' && charIndex == messageToPush.Length - 1)
+        {
+            speechBubble.SetActive(false);
+        }
+        else
+        {
+            text.text = "";
+            nextIcon.SetActive(false);
+            StartCoroutine(PushLetter());
+        }
     }
 
     IEnumerator PushLetter()
@@ -56,7 +63,15 @@ public class GameManager : MonoBehaviour
         while (charIndex < messageToPush.Length)
         {
             // Add the next letter to the text
-            text.text += messageToPush[charIndex];
+            if (messageToPush[charIndex] == '/' && charIndex == messageToPush.Length - 1)
+            {
+                nextIcon.SetActive(true);
+                yield break; // Exit the coroutine and wait for user input
+            }
+            else
+            {
+                text.text += messageToPush[charIndex];
+            }
 
             // Add pauses for punctuation
             if (char.IsPunctuation(messageToPush[charIndex]) && messageToPush[charIndex] != '\'' && messageToPush[charIndex] != '\"')
