@@ -12,12 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0bdd58bba2be4d4fbc7d5a4a747da4e, type: 3}
   m_Name: Gazpacho
   m_EditorClassIdentifier: 
-  ingredientEntries:
-  - ingredient: 0
-    quantity: 8
-  - ingredient: 9
-    quantity: 6
-  - ingredient: 10
-    quantity: 2
-  - ingredient: 3
-    quantity: 4
+  ingredients: 1b0000001d0000000b0000000e000000
+  quantities: 08000000060000000300000002000000

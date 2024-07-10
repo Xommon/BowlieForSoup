@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0bdd58bba2be4d4fbc7d5a4a747da4e, type: 3}
-  m_Name: FrenchOnion
+  m_Name: ButternutSquash
   m_EditorClassIdentifier: 
-  ingredients: 15000000070000000a00000005000000
-  quantities: 1e000000040000000200000001000000
+  ingredients: 180000000e000000
+  quantities: 0600000004000000

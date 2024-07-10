@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Submit") && nextIcon.activeInHierarchy)
+        if (ControlsManager.ButtonDown("A") && nextIcon.activeInHierarchy)
         {
             if (messageToPush.Length > charIndex)
             {
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     public void StartDialogue(int _lineIndex)
     {
         lineIndex = _lineIndex;
-        messageToPush = Dialogue.english[lineIndex];
+        messageToPush = Dialogue.dialogue[lineIndex, (int)language];
         charIndex = 0;
         text.text = "";
         speechBubble.SetActive(true);

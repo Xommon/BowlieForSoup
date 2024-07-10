@@ -1,5 +1,9 @@
 --- BOWLIE FOR SOUP ---
 
+Tomato, Onion, Garlic, Basil, Corn, Potato, Squash, Ginger, Jalapeno, Black Beans, Bell Pepper, Avocado, Lime, Butter, Cheese, Bread, Zucchini, Chili, Broccoli, Cheddar, Carrot, Celery, Egg, Green Onion, Tofu, Noodles, Mushroom, Coconut, Spinach, Beet
+
+--
+
 1 - Tomato -
 Tomato
 
@@ -10,12 +14,11 @@ Carrot
 Beet
 Potato
 Carrot
-Onion
 
 4 - Corn Chowder -
 Corn
 Potato
-Onion
+Green Onion
 
 5 - Three Sisters -
 Corn
@@ -46,7 +49,6 @@ Chives
 
 10 - Cream of Mushroom -
 Mushroom
-Onion
 Garlic
 Butter
 
@@ -54,18 +56,16 @@ Butter
 Tomato
 Zucchini
 Celery
-Onion
 Carrot
 
 12 - Butternut Squash -
 Squash
-Onion
 Garlic
-Ginger
+
 
 13 - Mexican Tortilla -
-Jalapenyo
 Tomato
+Jalapenyo
 Onion
 Black Beans
 Bell Pepper
@@ -74,15 +74,15 @@ Lime
 
 14 - Miso -
 Tofu
-Seaweed
+//Seaweed
 Green Onion
 Ginger
 
 15 - Cuban Black Bean -
 Black Beans
-Onion
 Bell Pepper
 Garlic
+Avocado
 
 16 - Laksa -
 Tofu
@@ -100,7 +100,6 @@ Lemon
 
 18 - Doenjang-Jjigae -
 Potato
-Onion
 Zucchini
 Chili
 Tofu
@@ -126,7 +125,6 @@ Carrots
 21 - Italian Wedding -
 Mushroom
 Bread
-Onion
 Garlic
 Spinach
 
@@ -134,7 +132,6 @@ Spinach
 Melon Seeds
 Bell Pepper
 Tomato
-Onion
 Chili
 Spinach
 
@@ -152,18 +149,16 @@ Tomato
 Ginger
 
 25 - Bilo-Bilo -
-Rice
 Coconut
 Plantain
 Sweet Potato
-Purple Potato
 
 26 - Egg Drop -
 Egg
 Green Onion
 
 27 - Molokhiya -
-Jute
+Spinach
 Garlic
 Tomato
 

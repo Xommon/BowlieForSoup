@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0bdd58bba2be4d4fbc7d5a4a747da4e, type: 3}
-  m_Name: CarrotSoup
+  m_Name: Carrot
   m_EditorClassIdentifier: 
-  ingredientEntries:
-  - ingredient: 1
-    quantity: 4
+  ingredients: 08000000
+  quantities: 03000000
