@@ -15,8 +15,6 @@ public class Enemy : MonoBehaviour
     private Player player;
     private Vector2 direction;
     private Hitbox hitbox;
-    public event System.Action OnBegin;
-    public event System.Action OnDone;
     private bool hit;
     public enum Behaviour { Chase, Flee };
     public Behaviour behaviour;
@@ -25,15 +23,6 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<Player>();
-        // Uncomment and adjust the following lines if needed
-        /*GameObject carrotObject = new GameObject("Carrot");
-        Veggies carrot = carrotObject.AddComponent<Veggies>();
-
-        Debug.Log("Veggie Details:");
-        Debug.Log("Name: " + carrot.veggieName);
-        Debug.Log("Health: " + carrot.health);
-        Debug.Log("Movement Speed: " + carrot.movementSpeed);
-        Debug.Log("Sight Range: " + carrot.sightRange);*/
     }
 
     private void FixedUpdate() 
