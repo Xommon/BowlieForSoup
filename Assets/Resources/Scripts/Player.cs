@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -8,16 +9,19 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     private Vector2 movementInput;
     private Vector2 direction;
+    public GameObject hitBoxPrefab;
+    private Hitbox activeHitBox;
+    public UnityEvent OnDone, OnBegin;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // Only allow these things with speech bubbles aren't open
-        if (!gameManager.speechBubble.activeInHierarchy)
+        if (!gameManager.speechBubble.activeInHierarchy && activeHitBox == null)
         {
             // Move player based on input if dialogue isn't happening
             movementInput = ControlsManager.Stick(0);
@@ -65,6 +69,12 @@ public class Player : MonoBehaviour
                 {
                     GameObject dialogueObject = hit.collider.gameObject;
                     gameManager.StartDialogue(hit.collider.gameObject.GetComponent<Sign>().messageIndex);
+                }
+                else
+                {
+                    // Swing the knife
+                    activeHitBox = Instantiate(hitBoxPrefab, (Vector2)transform.position + direction, Quaternion.identity).GetComponent<Hitbox>();
+                    activeHitBox.strength = 16;
                 }
             }
         }

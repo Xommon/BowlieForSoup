@@ -5,7 +5,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     // Language
-    public enum Language { English, Spanish, French };
+    public enum Language { English, Spanish, French, Esperanto, Cysperanto };
     public Language language;
 
     // Dialogue
